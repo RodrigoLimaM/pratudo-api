@@ -1,0 +1,1 @@
+web: java -jar build/libs/pratudo-api-0.0.1-SNAPSHOT.jar

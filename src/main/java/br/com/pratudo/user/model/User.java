@@ -26,10 +26,6 @@ public class User implements UserDetails {
 
     private Performance performance;
 
-    private String title;
-
-    private Badges badges;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();

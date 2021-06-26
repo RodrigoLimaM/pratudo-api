@@ -1,5 +1,6 @@
 package br.com.pratudo.user.model;
 
+import br.com.pratudo.user.model.enums.Title;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ public class Performance {
 
     private Experience experience;
 
-    private String title;
+    private Title title;
 
     private Badges badges;
 }

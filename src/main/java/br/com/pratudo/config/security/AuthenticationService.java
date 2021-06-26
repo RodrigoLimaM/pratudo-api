@@ -2,7 +2,7 @@ package br.com.pratudo.config.security;
 
 import br.com.pratudo.commons.search.SearchParamsFactory;
 import br.com.pratudo.user.client.UserClient;
-import br.com.pratudo.user.model.ElasticsearchUser;
+import br.com.pratudo.user.model.elasticsearch.ElasticsearchUser;
 import br.com.pratudo.user.model.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

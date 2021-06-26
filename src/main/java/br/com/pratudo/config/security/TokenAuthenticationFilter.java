@@ -50,7 +50,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private void authenticate(String token) {
         String _id = tokenService.getUser_Id(token);
-        User user = userMapper.convertElasticsearchSingleUserToUser(userClient.getUserBy_Id(_id));
+        User user = userClient.getUserBy_Id(_id)
+                .map(userMapper::convertElasticsearchSingleUserToUser)
+                .orElse(null);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

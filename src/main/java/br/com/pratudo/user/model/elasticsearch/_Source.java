@@ -1,5 +1,6 @@
-package br.com.pratudo.user.model;
+package br.com.pratudo.user.model.elasticsearch;
 
+import br.com.pratudo.user.model.Performance;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

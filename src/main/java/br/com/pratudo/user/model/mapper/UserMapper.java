@@ -1,13 +1,13 @@
 package br.com.pratudo.user.model.mapper;
 
 import br.com.pratudo.user.model.Badges;
-import br.com.pratudo.user.model.ElasticsearchSingleUser;
-import br.com.pratudo.user.model.ElasticsearchUser;
+import br.com.pratudo.user.model.elasticsearch.ElasticsearchSingleUser;
+import br.com.pratudo.user.model.elasticsearch.ElasticsearchUser;
 import br.com.pratudo.user.model.Experience;
-import br.com.pratudo.user.model.Hit;
+import br.com.pratudo.user.model.elasticsearch.Hit;
 import br.com.pratudo.user.model.Performance;
 import br.com.pratudo.user.model.User;
-import br.com.pratudo.user.model._Source;
+import br.com.pratudo.user.model.elasticsearch._Source;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -45,12 +45,12 @@ public class UserMapper {
                                 .from(experience.getFrom())
                                 .toNextLevel(experience.getToNextLevel())
                                 .build())
-                        .build())
-                .title(performance.getTitle())
-                .badges(Badges.builder()
-                        .owned(badges.getOwned())
-                        .count(badges.getCount())
-                        .possibleBadges(badges.getPossibleBadges())
+                        .title(performance.getTitle())
+                        .badges(Badges.builder()
+                                .owned(badges.getOwned())
+                                .count(badges.getCount())
+                                .possibleBadges(badges.getPossibleBadges())
+                                .build())
                         .build())
                 .build();
     }

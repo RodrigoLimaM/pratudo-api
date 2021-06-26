@@ -1,5 +1,6 @@
 package br.com.pratudo.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +33,7 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
         return this.email;
     }

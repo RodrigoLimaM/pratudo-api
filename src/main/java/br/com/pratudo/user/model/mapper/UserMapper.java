@@ -1,12 +1,12 @@
 package br.com.pratudo.user.model.mapper;
 
 import br.com.pratudo.user.model.Badges;
-import br.com.pratudo.user.model.elasticsearch.ElasticsearchSingleUser;
-import br.com.pratudo.user.model.elasticsearch.ElasticsearchUser;
 import br.com.pratudo.user.model.Experience;
-import br.com.pratudo.user.model.elasticsearch.Hit;
 import br.com.pratudo.user.model.Performance;
 import br.com.pratudo.user.model.User;
+import br.com.pratudo.user.model.elasticsearch.ElasticsearchSingleUser;
+import br.com.pratudo.user.model.elasticsearch.ElasticsearchUser;
+import br.com.pratudo.user.model.elasticsearch.Hit;
 import br.com.pratudo.user.model.elasticsearch._Source;
 import org.springframework.stereotype.Component;
 

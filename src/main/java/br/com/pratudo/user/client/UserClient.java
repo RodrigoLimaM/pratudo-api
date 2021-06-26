@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "UserClient", url = "${elasticsearch.url}", configuration = FeignConfig.class, decode404 = true)
 public interface UserClient {
 
-    String INDEX = "/pratudo/users";
+    String INDEX = "/users";
 
     @PostMapping(INDEX + "/_search")
     ElasticsearchUser getUserByEmail(@RequestBody SearchParams searchParams);
 
-    @GetMapping(INDEX + "/{_id}")
+    @GetMapping(INDEX + "/_doc/{_id}")
     ElasticsearchSingleUser getUserBy_Id(@PathVariable String _id);
 }

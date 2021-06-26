@@ -45,7 +45,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             return null;
         }
 
-        return token.substring(7, token.length());
+        return token.substring(7);
     }
 
     private void authenticate(String token) {

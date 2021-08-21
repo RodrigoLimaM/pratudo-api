@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {})
-// A senha deve conter ao menos 8 caracteres, uma letra maiúscula, uma letra minúscula e um caractere especial.
+// A senha deve conter ao menos 8 caracteres
 @Pattern(regexp = ".{8,}")
 public @interface Password {
 

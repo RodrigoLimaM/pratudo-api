@@ -34,10 +34,10 @@ public class RecipeController {
                 .body(recipe);
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<Page<Recipe>> getRecipes(@PageableDefault(page = 0, size = 10) Pageable pageable) {
+    @GetMapping("/latest")
+    public ResponseEntity<Page<Recipe>> getRecipesOrderByCreationDateDesc(@PageableDefault(page = 0, size = 10) Pageable pageable) {
         return ResponseEntity
-                .ok(recipeService.getRecipes(pageable));
+                .ok(recipeService.getRecipesOrderByCreationDateDesc(pageable));
     }
 
     @GetMapping("/ingredients")

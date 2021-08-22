@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -20,8 +20,8 @@ public class Comment {
     @Field(name = "content")
     private String content;
 
-    @Field(type = FieldType.Date, name = "creationDate")
-    private LocalDate creationDate;
+    @Field(type = FieldType.Date, name = "creationDate", format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    private LocalDateTime creationDate;
 
     @Field(name = "replies")
     private List<Reply> replies;

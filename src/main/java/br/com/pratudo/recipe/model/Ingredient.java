@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.annotations.Field;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @AllArgsConstructor
@@ -13,9 +16,12 @@ import java.util.List;
 @Data
 public class Ingredient {
 
+    @NotNull
     @Field(name = "step")
     private String step;
 
+    @Valid
+    @NotEmpty
     @JsonProperty("items")
     @Field(name = "items")
     private List<IngredientItem> ingredientItems;

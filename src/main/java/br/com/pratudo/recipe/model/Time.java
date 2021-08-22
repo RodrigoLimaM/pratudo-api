@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.annotations.Field;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 @Data
 public class Time {
 
+    @NotNull
     @JsonProperty("unit")
     @Field(name = "unit")
     private TimeUnit timeUnit;

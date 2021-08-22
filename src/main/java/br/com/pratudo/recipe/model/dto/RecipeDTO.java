@@ -10,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,24 +22,31 @@ import java.util.List;
 @Data
 public class RecipeDTO {
 
+    @NotNull
     private String name;
 
     private List<String> images;
 
     private Owner owner;
 
+    @NotNull
     private Difficulty difficulty;
 
     private LocalDateTime creationDate;
 
+    @NotNull
     private String chefTips;
 
     private BigDecimal rate;
 
     private List<Rating> ratings;
 
+    @Valid
+    @NotEmpty
     private List<Ingredient> ingredients;
 
+    @Valid
+    @NotNull
     private MethodOfPreparation methodOfPreparation;
 
     private List<Comment> comments;

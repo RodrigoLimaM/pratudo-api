@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.annotations.Field;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,6 +20,8 @@ public class MethodOfPreparation {
     @Field(name = "totalMethodOfPreparationTime")
     private Time time;
 
+    @Valid
+    @NotEmpty
     @Field(name = "steps")
     private List<Step> steps;
 

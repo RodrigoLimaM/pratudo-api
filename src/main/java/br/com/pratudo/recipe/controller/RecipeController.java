@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -27,7 +28,7 @@ public class RecipeController {
     RecipeService recipeService;
 
     @PostMapping
-    public ResponseEntity<Recipe> createRecipe(@RequestBody final RecipeDTO recipeDTO) throws URISyntaxException {
+    public ResponseEntity<Recipe> createRecipe(@Valid @RequestBody final RecipeDTO recipeDTO) throws URISyntaxException {
         final Recipe recipe = recipeService.createRecipe(recipeDTO);
         return ResponseEntity
                 .created(new URI("/recipe/" +recipe.get_id()))
@@ -41,13 +42,15 @@ public class RecipeController {
     }
 
     @GetMapping("/ingredients")
-    public ResponseEntity<Page<Recipe>> getRecipesByIngredients(@RequestParam final List<String> ingredients, @PageableDefault(page = 0, size = 10) Pageable pageable) {
+    public ResponseEntity<Page<Recipe>> getRecipesByIngredients(@RequestParam(defaultValue = "") final List<String> ingredients,
+                                                                @PageableDefault(page = 0, size = 10) Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByIngredients(ingredients, pageable));
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<Recipe>> getRecipesByName(@RequestParam final String name, @PageableDefault(page = 0, size = 10) Pageable pageable) {
+    public ResponseEntity<Page<Recipe>> getRecipesByName(@RequestParam(defaultValue = "") final String name,
+                                                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByName(name, pageable));
     }

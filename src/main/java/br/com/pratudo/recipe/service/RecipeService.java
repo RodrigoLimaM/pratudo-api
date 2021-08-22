@@ -8,6 +8,7 @@ import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.user.model.User;
+import br.com.pratudo.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,9 @@ public class RecipeService {
 
     @Autowired
     RecipeMapper recipeMapper;
+
+    @Autowired
+    SecurityUtils securityUtils;
 
     public Recipe createRecipe(final RecipeDTO recipeDTO) {
         recipeDTO.setOwner(buildInitialOwner());
@@ -52,31 +56,9 @@ public class RecipeService {
 
     private Owner buildInitialOwner() {
         return Owner.builder()
-                ._id(getCurrent_Id())
-                .name(getCurrentName())
+                ._id(securityUtils.getCurrent_Id())
+                .name(securityUtils.getCurrentName())
                 .build();
-    }
-
-    public String getCurrent_Id() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            Object principal = auth.getPrincipal();
-            if (principal instanceof User) {
-                return ((User) principal).get_id();
-            }
-        }
-        return null;
-    }
-
-    public String getCurrentName() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            Object principal = auth.getPrincipal();
-            if (principal instanceof User) {
-                return ((User) principal).getName();
-            }
-        }
-        return null;
     }
 
     public Page<Recipe> getRecipes(final Pageable pageable) {

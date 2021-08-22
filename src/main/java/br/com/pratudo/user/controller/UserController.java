@@ -1,5 +1,6 @@
 package br.com.pratudo.user.controller;
 
+import br.com.pratudo.user.model.Performance;
 import br.com.pratudo.user.model.User;
 import br.com.pratudo.user.model.dto.UserDTO;
 import br.com.pratudo.user.service.UserService;
@@ -36,5 +37,10 @@ public class UserController {
         return ResponseEntity
                 .created(new URI("/user/" +user.get_id()))
                 .body(user);
+    }
+
+    @GetMapping("/performance")
+    public ResponseEntity<Performance> getCurrentUserPerformance() {
+        return ResponseEntity.ok(userService.getCurrentUserPerformance());
     }
 }

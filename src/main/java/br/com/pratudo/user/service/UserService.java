@@ -9,6 +9,7 @@ import br.com.pratudo.user.model.dto.UserDTO;
 import br.com.pratudo.user.model.enums.Title;
 import br.com.pratudo.user.model.mapper.UserMapper;
 import br.com.pratudo.user.repository.UserRepository;
+import br.com.pratudo.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class UserService {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    SecurityUtils securityUtils;
 
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -66,5 +70,9 @@ public class UserService {
                         .possibleBadges(10L)
                         .build())
                 .build();
+    }
+
+    public Performance getCurrentUserPerformance() {
+        return userRepository.findById(securityUtils.getCurrent_Id()).map(User::getPerformance).orElse(null);
     }
 }

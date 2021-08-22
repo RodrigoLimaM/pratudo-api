@@ -11,7 +11,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -36,8 +36,8 @@ public class Recipe {
     @Field(name = "difficulty")
     private Difficulty difficulty;
 
-    @Field(type = FieldType.Date, name = "creationDate")
-    private LocalDate creationDate;
+    @Field(type = FieldType.Date, name = "creationDate", format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    private LocalDateTime creationDate;
 
     @Field(name = "chefTips")
     private String chefTips;

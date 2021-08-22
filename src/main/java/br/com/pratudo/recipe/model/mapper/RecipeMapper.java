@@ -1,43 +1,19 @@
 package br.com.pratudo.recipe.model.mapper;
 
 import br.com.pratudo.recipe.model.Recipe;
-import br.com.pratudo.recipe.model.elasticsearch.ElasticsearchRecipe;
-import br.com.pratudo.recipe.model.elasticsearch.RecipeHit;
-import br.com.pratudo.recipe.model.elasticsearch.RecipeSource;
+import br.com.pratudo.recipe.model.dto.RecipeDTO;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class RecipeMapper {
 
-    public List<Recipe> convertElasticsearchRecipeToRecipeList(final ElasticsearchRecipe elasticsearchRecipe) {
+    @Autowired
+    ModelMapper modelMapper;
 
-        return elasticsearchRecipe.getRecipeHits()
-                .getRecipeHits()
-                .stream()
-                .map(this::convertRecipeHitToRecipe)
-                .collect(Collectors.toList());
-    }
-
-    private Recipe convertRecipeHitToRecipe(final RecipeHit recipeHit) {
-        final RecipeSource recipeSource = recipeHit.getRecipeSource();
-        return Recipe.builder()
-                ._id(recipeHit.get_id())
-                .name(recipeSource.getName())
-                .images(recipeSource.getImages())
-                .owner(recipeSource.getOwner())
-                .difficulty(recipeSource.getDifficulty())
-                .creationDate(recipeSource.getCreationDate())
-                .chefTips(recipeSource.getChefTips())
-                .rate(recipeSource.getRate())
-                .ratings(recipeSource.getRatings())
-                .ingredients(recipeSource.getIngredients())
-                .methodOfPreparation(recipeSource.getMethodOfPreparation())
-                .comments(recipeSource.getComments())
-                .tags(recipeSource.getTags())
-                .build();
+    public Recipe convertRecipeDTOToRecipe(RecipeDTO recipeDTO) {
+        return modelMapper.map(recipeDTO, Recipe.class);
     }
 
 }

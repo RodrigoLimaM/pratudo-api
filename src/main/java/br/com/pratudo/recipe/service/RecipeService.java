@@ -1,13 +1,10 @@
 package br.com.pratudo.recipe.service;
 
-import br.com.pratudo.commons.search.SearchParamsFactory;
-import br.com.pratudo.recipe.client.RecipeClient;
 import br.com.pratudo.recipe.model.MethodOfPreparation;
 import br.com.pratudo.recipe.model.Owner;
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.Time;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
-import br.com.pratudo.recipe.model.elasticsearch.ElasticsearchSingleRecipe;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.user.model.User;
@@ -28,15 +25,12 @@ import java.util.concurrent.TimeUnit;
 public class RecipeService {
 
     @Autowired
-    RecipeClient recipeClient;
-
-    @Autowired
     RecipeRepository recipeRepository;
 
     @Autowired
     RecipeMapper recipeMapper;
 
-    public ElasticsearchSingleRecipe createRecipe(final RecipeDTO recipeDTO) {
+    public Recipe createRecipe(final RecipeDTO recipeDTO) {
         recipeDTO.setOwner(buildInitialOwner());
 
         recipeDTO.setCreationDate(LocalDate.now());
@@ -53,7 +47,7 @@ public class RecipeService {
 
         recipeDTO.setComments(Collections.emptyList());
 
-        return recipeClient.createUser(recipeDTO);
+        return recipeRepository.save(recipeMapper.convertRecipeDTOToRecipe(recipeDTO));
     }
 
     private Owner buildInitialOwner() {

@@ -2,7 +2,6 @@ package br.com.pratudo.recipe.controller;
 
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
-import br.com.pratudo.recipe.model.elasticsearch.ElasticsearchSingleRecipe;
 import br.com.pratudo.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,11 +27,11 @@ public class RecipeController {
     RecipeService recipeService;
 
     @PostMapping
-    public ResponseEntity<ElasticsearchSingleRecipe> createRecipe(@RequestBody final RecipeDTO recipeDTO) throws URISyntaxException {
-        final ElasticsearchSingleRecipe elasticsearchSingleRecipe = recipeService.createRecipe(recipeDTO);
+    public ResponseEntity<Recipe> createRecipe(@RequestBody final RecipeDTO recipeDTO) throws URISyntaxException {
+        final Recipe recipe = recipeService.createRecipe(recipeDTO);
         return ResponseEntity
-                .created(new URI("/recipe/" +elasticsearchSingleRecipe.get_id()))
-                .body(elasticsearchSingleRecipe);
+                .created(new URI("/recipe/" +recipe.get_id()))
+                .body(recipe);
     }
 
     @GetMapping("/all")

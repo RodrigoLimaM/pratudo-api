@@ -1,5 +1,6 @@
 package br.com.pratudo.user.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +21,9 @@ public class Experience {
 
     @Field(name = "toNextLevel")
     private Long toNextLevel;
+
+    @JsonProperty
+    private Long getPercentage() {
+        return (this.current / this.from) * 100;
+    }
 }

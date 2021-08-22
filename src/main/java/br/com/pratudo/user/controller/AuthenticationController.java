@@ -26,16 +26,12 @@ public class AuthenticationController {
 	private TokenService tokenService;
 
 	@PostMapping
-	public ResponseEntity<TokenDto> authenticate(@RequestBody LoginForm form) {
+	public ResponseEntity<TokenDto> authenticate(@RequestBody LoginForm form) throws AuthenticationException {
 		UsernamePasswordAuthenticationToken loginData = form.convert();
-		
-		try {
-			Authentication authentication = authenticationManager.authenticate(loginData);
-			String token = tokenService.generateToken(authentication);
-			return ResponseEntity.ok(new TokenDto(token, "Bearer"));
-		} catch (AuthenticationException e) {
-			return ResponseEntity.badRequest().build();
-		}
+
+		Authentication authentication = authenticationManager.authenticate(loginData);
+		String token = tokenService.generateToken(authentication);
+		return ResponseEntity.ok(new TokenDto(token, "Bearer"));
 	}
 	
 }

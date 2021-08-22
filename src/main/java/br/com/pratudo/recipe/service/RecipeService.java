@@ -1,11 +1,14 @@
 package br.com.pratudo.recipe.service;
 
+import br.com.pratudo.commons.search.SearchParamsFactory;
 import br.com.pratudo.recipe.client.RecipeClient;
 import br.com.pratudo.recipe.model.MethodOfPreparation;
 import br.com.pratudo.recipe.model.Owner;
+import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.Time;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.elasticsearch.ElasticsearchSingleRecipe;
+import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -22,6 +26,9 @@ public class RecipeService {
 
     @Autowired
     RecipeClient recipeClient;
+
+    @Autowired
+    RecipeMapper recipeMapper;
 
     public ElasticsearchSingleRecipe createRecipe(final RecipeDTO recipeDTO) {
         recipeDTO.setOwner(buildInitialOwner());
@@ -70,5 +77,9 @@ public class RecipeService {
             }
         }
         return null;
+    }
+
+    public List<Recipe> getRecipeByIngredients(List<String> ingredients) {
+        return recipeMapper.convertElasticsearchRecipeToRecipe(recipeClient.getRecipeByIngredients(SearchParamsFactory.buildGetRecipeByIngredientsParams(ingredients)));
     }
 }

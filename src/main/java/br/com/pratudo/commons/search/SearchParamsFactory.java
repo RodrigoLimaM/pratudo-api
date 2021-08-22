@@ -1,5 +1,7 @@
 package br.com.pratudo.commons.search;
 
+import java.util.List;
+
 import static br.com.pratudo.commons.search.SearchParams.Match;
 import static br.com.pratudo.commons.search.SearchParams.Query;
 
@@ -15,6 +17,16 @@ public class SearchParamsFactory {
                 .query(Query.builder()
                         .match(Match.builder()
                                 .email(email)
+                                .build())
+                        .build())
+                .build();
+    }
+
+    public static SearchParams buildGetRecipeByIngredientsParams(List<String> ingredients) {
+        return  SearchParams.builder()
+                .query(Query.builder()
+                        .match(Match.builder()
+                                .ingredientsItemsName(ingredients.toString().replace("[", "").replace("]", ""))
                                 .build())
                         .build())
                 .build();

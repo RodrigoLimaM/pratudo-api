@@ -1,7 +1,9 @@
 package br.com.pratudo.recipe.client;
 
+import br.com.pratudo.commons.search.SearchParams;
 import br.com.pratudo.config.security.FeignConfig;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
+import br.com.pratudo.recipe.model.elasticsearch.ElasticsearchRecipe;
 import br.com.pratudo.recipe.model.elasticsearch.ElasticsearchSingleRecipe;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,4 +16,8 @@ public interface RecipeClient {
 
     @PostMapping(INDEX + "/_doc")
     ElasticsearchSingleRecipe createUser(@RequestBody RecipeDTO recipeDTO);
+
+    @PostMapping(INDEX + "/_search")
+    ElasticsearchRecipe getRecipeByIngredients(@RequestBody SearchParams searchParams);
+
 }

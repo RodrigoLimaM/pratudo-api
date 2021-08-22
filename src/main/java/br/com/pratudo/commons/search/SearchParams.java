@@ -1,6 +1,7 @@
 package br.com.pratudo.commons.search;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +36,9 @@ public class SearchParams {
     public static class Match {
 
         private String email;
+
+        @JsonProperty("ingredients.items.name")
+        private String ingredientsItemsName;
     }
 
 }

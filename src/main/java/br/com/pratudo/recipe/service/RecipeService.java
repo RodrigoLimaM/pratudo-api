@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -34,7 +35,7 @@ public class RecipeService {
     public Recipe createRecipe(final RecipeDTO recipeDTO) {
         recipeDTO.setOwner(buildInitialOwner());
 
-        recipeDTO.setCreationDate(LocalDate.now());
+        recipeDTO.setCreationDate(LocalDateTime.now());
 
         recipeDTO.setRate(BigDecimal.ZERO);
 
@@ -58,8 +59,8 @@ public class RecipeService {
                 .build();
     }
 
-    public Page<Recipe> getRecipes(final Pageable pageable) {
-        return recipeRepository.findAll(pageable);
+    public Page<Recipe> getRecipesOrderByCreationDateDesc(final Pageable pageable) {
+        return recipeRepository.findAllByOrderByCreationDateDesc(pageable);
     }
 
     public Page<Recipe> getRecipesByIngredients(final List<String> ingredients, final Pageable pageable) {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.util.List;
 
@@ -14,8 +15,10 @@ import java.util.List;
 public class MethodOfPreparation {
 
     @JsonProperty("totalMethodOfPreparationTime")
+    @Field(name = "totalMethodOfPreparationTime")
     private Time time;
 
+    @Field(name = "steps")
     private List<Step> steps;
 
     @JsonIgnore

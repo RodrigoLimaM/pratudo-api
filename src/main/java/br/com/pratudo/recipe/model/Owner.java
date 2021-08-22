@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.elasticsearch.annotations.Field;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,7 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Owner {
 
+    @Field(name = "_id")
     private String _id;
 
+    @Field(name = "name")
     private String name;
 }

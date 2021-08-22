@@ -28,11 +28,13 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2020.0.3")
+	set('elasticsearch.version', '7.10.2')
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.data:spring-data-elasticsearch'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'

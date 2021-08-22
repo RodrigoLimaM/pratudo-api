@@ -37,6 +37,8 @@ public class SearchParams {
 
         private String email;
 
+        private String name;
+
         @JsonProperty("ingredients.items.name")
         private String ingredientsItemsName;
     }

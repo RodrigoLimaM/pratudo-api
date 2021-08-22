@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
 @Component
 public class RecipeMapper {
 
-    public List<Recipe> convertElasticsearchRecipeToRecipe(final ElasticsearchRecipe elasticsearchRecipe) {
+    public List<Recipe> convertElasticsearchRecipeToRecipeList(final ElasticsearchRecipe elasticsearchRecipe) {
 
         return elasticsearchRecipe.getRecipeHits()
                 .getRecipeHits()
                 .stream()
-                .map(this::convertElasticsearchRecipeToRecipe)
+                .map(this::convertRecipeHitToRecipe)
                 .collect(Collectors.toList());
     }
 
-    private Recipe convertElasticsearchRecipeToRecipe(final RecipeHit recipeHit) {
+    private Recipe convertRecipeHitToRecipe(final RecipeHit recipeHit) {
         final RecipeSource recipeSource = recipeHit.getRecipeSource();
         return Recipe.builder()
                 ._id(recipeHit.get_id())

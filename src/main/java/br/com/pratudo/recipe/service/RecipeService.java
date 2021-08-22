@@ -79,7 +79,16 @@ public class RecipeService {
         return null;
     }
 
-    public List<Recipe> getRecipeByIngredients(List<String> ingredients) {
-        return recipeMapper.convertElasticsearchRecipeToRecipe(recipeClient.getRecipeByIngredients(SearchParamsFactory.buildGetRecipeByIngredientsParams(ingredients)));
+    public List<Recipe> getRecipes() {
+        return recipeMapper.convertElasticsearchRecipeToRecipeList(recipeClient.getRecipes());
     }
+
+    public List<Recipe> getRecipesByIngredients(final List<String> ingredients) {
+        return recipeMapper.convertElasticsearchRecipeToRecipeList(recipeClient.getRecipesByIngredients(SearchParamsFactory.buildGetRecipesByIngredientsParams(ingredients)));
+    }
+
+    public List<Recipe> getRecipesByName(final String name) {
+        return recipeMapper.convertElasticsearchRecipeToRecipeList(recipeClient.getRecipesByName(SearchParamsFactory.buildGetRecipesByNameParams(name)));
+    }
+
 }

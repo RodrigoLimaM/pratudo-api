@@ -32,9 +32,22 @@ public class RecipeController {
                 .body(elasticsearchSingleRecipe);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Recipe>> getRecipeByIngredients(@RequestParam final List<String> ingredients) {
+    @GetMapping("/all")
+    public ResponseEntity<List<Recipe>> getRecipes() {
         return ResponseEntity
-                .ok(recipeService.getRecipeByIngredients(ingredients));
+                .ok(recipeService.getRecipes());
     }
+
+    @GetMapping("/ingredients")
+    public ResponseEntity<List<Recipe>> getRecipesByIngredients(@RequestParam final List<String> ingredients) {
+        return ResponseEntity
+                .ok(recipeService.getRecipesByIngredients(ingredients));
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<List<Recipe>> getRecipesByName(@RequestParam final String name) {
+        return ResponseEntity
+                .ok(recipeService.getRecipesByName(name));
+    }
+
 }

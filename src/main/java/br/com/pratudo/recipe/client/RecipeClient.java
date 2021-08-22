@@ -18,6 +18,11 @@ public interface RecipeClient {
     ElasticsearchSingleRecipe createUser(@RequestBody RecipeDTO recipeDTO);
 
     @PostMapping(INDEX + "/_search")
-    ElasticsearchRecipe getRecipeByIngredients(@RequestBody SearchParams searchParams);
+    ElasticsearchRecipe getRecipesByIngredients(@RequestBody SearchParams searchParams);
 
+    @PostMapping(INDEX + "/_search")
+    ElasticsearchRecipe getRecipesByName(@RequestBody SearchParams searchParams);
+
+    @PostMapping(INDEX + "/_search")
+    ElasticsearchRecipe getRecipes();
 }

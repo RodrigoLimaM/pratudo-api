@@ -22,11 +22,21 @@ public class SearchParamsFactory {
                 .build();
     }
 
-    public static SearchParams buildGetRecipeByIngredientsParams(List<String> ingredients) {
+    public static SearchParams buildGetRecipesByIngredientsParams(List<String> ingredients) {
         return  SearchParams.builder()
                 .query(Query.builder()
                         .match(Match.builder()
                                 .ingredientsItemsName(ingredients.toString().replace("[", "").replace("]", ""))
+                                .build())
+                        .build())
+                .build();
+    }
+
+    public static SearchParams buildGetRecipesByNameParams(String name) {
+        return  SearchParams.builder()
+                .query(Query.builder()
+                        .match(Match.builder()
+                                .name(name)
                                 .build())
                         .build())
                 .build();

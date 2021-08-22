@@ -19,7 +19,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("status", BAD_REQUEST.value());
-        body.put("message", "User already exists");
+        body.put("message", "Usuário já existente");
 
         return new ResponseEntity<>(body, BAD_REQUEST);
     }

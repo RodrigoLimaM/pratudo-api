@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.util.List;
 
@@ -13,9 +14,12 @@ import java.util.List;
 @Builder
 public class Badges {
 
+    @Field(name = "owned")
     private List<String> owned;
 
+    @Field(name = "count")
     private Long count;
 
+    @Field(name = "possibleBadges")
     private Long possibleBadges;
 }

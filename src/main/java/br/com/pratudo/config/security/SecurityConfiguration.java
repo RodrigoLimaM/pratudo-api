@@ -1,7 +1,7 @@
 package br.com.pratudo.config.security;
 
-import br.com.pratudo.user.client.UserClient;
 import br.com.pratudo.user.model.mapper.UserMapper;
+import br.com.pratudo.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     TokenService tokenService;
 
     @Autowired
-    UserClient userClient;
+    UserRepository userRepository;
 
     @Autowired
     UserMapper userMapper;
@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(new TokenAuthenticationFilter(tokenService, userClient, userMapper), UsernamePasswordAuthenticationFilter.class)
+                .and().addFilterBefore(new TokenAuthenticationFilter(tokenService, userRepository, userMapper), UsernamePasswordAuthenticationFilter.class)
         ;
     }
 

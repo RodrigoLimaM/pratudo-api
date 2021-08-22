@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -35,7 +36,7 @@ public class Recipe {
     @Field(name = "difficulty")
     private Difficulty difficulty;
 
-    @Field(name = "creationDate")
+    @Field(type = FieldType.Date, name = "creationDate")
     private LocalDate creationDate;
 
     @Field(name = "chefTips")
@@ -46,7 +47,6 @@ public class Recipe {
 
     @Field(name = "ratings")
     private List<Rating> ratings;
-
 
     @Field(name = "ingredients")
     private List<Ingredient> ingredients;

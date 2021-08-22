@@ -1,8 +1,8 @@
 package br.com.pratudo.config.security;
 
-import br.com.pratudo.user.client.UserClient;
 import br.com.pratudo.user.model.User;
 import br.com.pratudo.user.model.mapper.UserMapper;
+import br.com.pratudo.user.repository.UserRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -17,13 +17,13 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     TokenService tokenService;
 
-    UserClient userClient;
+    UserRepository userRepository;
 
     UserMapper userMapper;
 
-    public TokenAuthenticationFilter(TokenService tokenService, UserClient userClient, UserMapper userMapper) {
+    public TokenAuthenticationFilter(TokenService tokenService, UserRepository userRepository, UserMapper userMapper) {
         this.tokenService = tokenService;
-        this.userClient = userClient;
+        this.userRepository = userRepository;
         this.userMapper = userMapper;
     }
 
@@ -50,9 +50,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private void authenticate(String token) {
         String _id = tokenService.getUser_Id(token);
-        User user = userClient.getUserBy_Id(_id)
-                .map(userMapper::convertElasticsearchSingleUserToUser)
-                .orElse(null);
+        User user = userRepository.findById(_id).orElse(null);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

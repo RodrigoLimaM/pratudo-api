@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,16 +18,22 @@ import java.util.Collections;
 @NoArgsConstructor
 @Data
 @Builder
+@Document(indexName = "users")
 public class User implements UserDetails {
 
+    @Id
     private String _id;
 
+    @Field(name = "email")
     private String email;
 
+    @Field(name = "password")
     private String password;
 
+    @Field(name = "name")
     private String name;
 
+    @Field(name = "performance")
     private Performance performance;
 
     @Override

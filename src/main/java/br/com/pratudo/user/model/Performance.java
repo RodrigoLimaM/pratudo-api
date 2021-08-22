@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.elasticsearch.annotations.Field;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,11 +13,15 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Performance {
 
+    @Field(name = "level")
     private Long level;
 
+    @Field(name = "experience")
     private Experience experience;
 
+    @Field(name = "title")
     private Title title;
 
+    @Field(name = "badges")
     private Badges badges;
 }

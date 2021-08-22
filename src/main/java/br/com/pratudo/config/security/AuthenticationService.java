@@ -1,9 +1,8 @@
 package br.com.pratudo.config.security;
 
-import br.com.pratudo.commons.search.SearchParamsFactory;
-import br.com.pratudo.user.client.UserClient;
-import br.com.pratudo.user.model.elasticsearch.ElasticsearchUser;
+import br.com.pratudo.user.model.User;
 import br.com.pratudo.user.model.mapper.UserMapper;
+import br.com.pratudo.user.repository.UserRepository;
 import br.com.pratudo.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService implements UserDetailsService {
 
     @Autowired
-    UserClient userClient;
+    UserRepository userRepository;
 
     @Autowired
     UserMapper userMapper;
@@ -25,13 +24,12 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        ElasticsearchUser elasticsearchUser = userClient.getUserByEmail(SearchParamsFactory.buildGetUserByEmailParams(email));
+        final User user = userRepository.findUserByEmail(email);
 
-        if(!userService.isUserExistent(elasticsearchUser)) {
+        if(user == null)
             throw new UsernameNotFoundException("User not found");
-        }
 
-        return userMapper.convertElasticsearchUserToUser(elasticsearchUser);
+        return user;
     }
 
 }

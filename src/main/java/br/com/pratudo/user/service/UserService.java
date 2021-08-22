@@ -1,55 +1,54 @@
 package br.com.pratudo.user.service;
 
-import br.com.pratudo.commons.search.SearchParamsFactory;
 import br.com.pratudo.config.exception.UserAlreadyExistsException;
-import br.com.pratudo.user.client.UserClient;
 import br.com.pratudo.user.model.Badges;
 import br.com.pratudo.user.model.Experience;
 import br.com.pratudo.user.model.Performance;
 import br.com.pratudo.user.model.User;
 import br.com.pratudo.user.model.dto.UserDTO;
-import br.com.pratudo.user.model.elasticsearch.ElasticsearchSingleUser;
-import br.com.pratudo.user.model.elasticsearch.ElasticsearchUser;
 import br.com.pratudo.user.model.enums.Title;
 import br.com.pratudo.user.model.mapper.UserMapper;
+import br.com.pratudo.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
     @Autowired
-    UserClient userClient;
+    UserRepository userRepository;
 
     @Autowired
     UserMapper userMapper;
 
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    public Optional<User> getUserBy_Id(String _id) {
-        return userClient.getUserBy_Id(_id)
-                .map(userMapper::convertElasticsearchSingleUserToUser);
+    public Optional<User> getUserBy_Id(final String _id) {
+        return userRepository.findById(_id);
     }
 
-    public ElasticsearchSingleUser createUser(UserDTO userDTO) {
-        ElasticsearchUser elasticsearchUser = userClient.getUserByEmail(SearchParamsFactory.buildGetUserByEmailParams(userDTO.getEmail()));
+    public User createUser(final UserDTO userDTO) {
+        String email = userDTO.getEmail();
 
-        if(isUserExistent(elasticsearchUser)) {
+        final User user = userRepository.findUserByEmail(email);
+
+        if(user != null) {
             throw new UserAlreadyExistsException();
         }
 
         userDTO.setPerformance(buildInitialPerformance());
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
 
-        return userClient.createUser(userDTO);
+        return userRepository.save(userMapper.convertUserDTOToUser(userDTO));
     }
 
-    public boolean isUserExistent(ElasticsearchUser elasticsearchUser) {
-        return !elasticsearchUser.getUserHits().getUserHits().isEmpty();
+    public boolean isUserExistent(List<User> users) {
+        return users.isEmpty();
     }
 
     private Performance buildInitialPerformance() {

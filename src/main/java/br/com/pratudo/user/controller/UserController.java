@@ -2,7 +2,6 @@ package br.com.pratudo.user.controller;
 
 import br.com.pratudo.user.model.User;
 import br.com.pratudo.user.model.dto.UserDTO;
-import br.com.pratudo.user.model.elasticsearch.ElasticsearchSingleUser;
 import br.com.pratudo.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,17 +24,17 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/{_id}")
-    public ResponseEntity<User> getUserBy_Id(@PathVariable String _id) {
+    public ResponseEntity<User> getUserBy_Id(@PathVariable final String _id) {
         return userService.getUserBy_Id(_id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<ElasticsearchSingleUser> createUser(@RequestBody @Valid UserDTO userDTO) throws URISyntaxException {
-        ElasticsearchSingleUser elasticsearchSingleUser = userService.createUser(userDTO);
+    public ResponseEntity<User> createUser(@RequestBody @Valid final UserDTO userDTO) throws URISyntaxException {
+        User user = userService.createUser(userDTO);
         return ResponseEntity
-                .created(new URI("/user/" +elasticsearchSingleUser.get_id()))
-                .body(elasticsearchSingleUser);
+                .created(new URI("/user/" +user.get_id()))
+                .body(user);
     }
 }

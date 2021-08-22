@@ -1,9 +1,11 @@
 package br.com.pratudo.recipe.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +21,7 @@ public class Comment {
     @Field(name = "content")
     private String content;
 
-    @Field(name = "name")
+    @Field(type = FieldType.Date, name = "creationDate")
     private LocalDate creationDate;
 
     @Field(name = "replies")

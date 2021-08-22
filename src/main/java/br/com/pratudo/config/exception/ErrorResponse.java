@@ -1,16 +1,14 @@
 package br.com.pratudo.config.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
-@Setter
+@Data
 @RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
@@ -19,8 +17,7 @@ public class ErrorResponse {
     private String stackTrace;
     private List<ValidationError> errors;
 
-    @Getter
-    @Setter
+    @Data
     @RequiredArgsConstructor
     private static class ValidationError {
         private final String field;
@@ -28,7 +25,7 @@ public class ErrorResponse {
     }
 
     public void addValidationError(String field, String message){
-        if(Objects.isNull(errors)){
+        if (Objects.isNull(errors)) {
             errors = new ArrayList<>();
         }
         errors.add(new ValidationError(field, message));

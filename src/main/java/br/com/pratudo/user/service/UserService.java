@@ -1,6 +1,5 @@
 package br.com.pratudo.user.service;
 
-import br.com.pratudo.commons.search.SearchParams;
 import br.com.pratudo.commons.search.SearchParamsFactory;
 import br.com.pratudo.config.exception.UserAlreadyExistsException;
 import br.com.pratudo.user.client.UserClient;
@@ -50,7 +49,7 @@ public class UserService {
     }
 
     public boolean isUserExistent(ElasticsearchUser elasticsearchUser) {
-        return !elasticsearchUser.getHits().getHits().isEmpty();
+        return !elasticsearchUser.getUserHits().getUserHits().isEmpty();
     }
 
     private Performance buildInitialPerformance() {

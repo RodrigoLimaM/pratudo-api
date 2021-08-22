@@ -6,25 +6,25 @@ import br.com.pratudo.user.model.Performance;
 import br.com.pratudo.user.model.User;
 import br.com.pratudo.user.model.elasticsearch.ElasticsearchSingleUser;
 import br.com.pratudo.user.model.elasticsearch.ElasticsearchUser;
-import br.com.pratudo.user.model.elasticsearch.Hit;
-import br.com.pratudo.user.model.elasticsearch._Source;
+import br.com.pratudo.user.model.elasticsearch.UserHit;
+import br.com.pratudo.user.model.elasticsearch.UserSource;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
 
     public User convertElasticsearchUserToUser(ElasticsearchUser elasticsearchUser) {
-        Hit hit = elasticsearchUser.getHits().getHits().get(0);
-        _Source source = hit.get_source();
+        UserHit userHit = elasticsearchUser.getUserHits().getUserHits().get(0);
+        UserSource source = userHit.getUserSource();
         Performance performance = source.getPerformance();
         Badges badges = performance.getBadges();
         Experience experience = performance.getExperience();
 
-        return buildUser(source, performance, badges, experience, hit.get_id());
+        return buildUser(source, performance, badges, experience, userHit.get_id());
     }
 
     public User convertElasticsearchSingleUserToUser(ElasticsearchSingleUser elasticsearchSingleUser) {
-        _Source source = elasticsearchSingleUser.get_source();
+        UserSource source = elasticsearchSingleUser.getUserSource();
         Performance performance = source.getPerformance();
         Badges badges = performance.getBadges();
         Experience experience = performance.getExperience();
@@ -32,7 +32,7 @@ public class UserMapper {
         return buildUser(source, performance, badges, experience, elasticsearchSingleUser.get_id());
     }
 
-    private User buildUser(_Source source, Performance performance, Badges badges, Experience experience, String id) {
+    private User buildUser(UserSource source, Performance performance, Badges badges, Experience experience, String id) {
         return User.builder()
                 ._id(id)
                 .email(source.getEmail())

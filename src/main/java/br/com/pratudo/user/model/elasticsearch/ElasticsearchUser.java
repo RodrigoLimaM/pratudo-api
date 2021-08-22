@@ -1,5 +1,6 @@
 package br.com.pratudo.user.model.elasticsearch;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,5 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class ElasticsearchUser {
 
-    private Hits hits;
+    @JsonProperty("hits")
+    private UserHits userHits;
 }

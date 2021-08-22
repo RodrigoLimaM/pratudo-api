@@ -1,4 +1,4 @@
-package br.com.pratudo.user.model.elasticsearch;
+package br.com.pratudo.recipe.model.elasticsearch;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ElasticsearchSingleUser {
+public class ElasticsearchSingleRecipe {
 
     private String _id;
 
     @JsonProperty("_source")
-    private UserSource userSource;
+    private RecipeSource recipeSource;
 }

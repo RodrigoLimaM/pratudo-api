@@ -1,15 +1,15 @@
-package br.com.pratudo.user.model.elasticsearch;
+package br.com.pratudo.recipe.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public  class Hits {
+public class MethodOfPreparationItem {
 
-    private List<Hit> hits;
+    private String description;
+
+    private Time time;
 }

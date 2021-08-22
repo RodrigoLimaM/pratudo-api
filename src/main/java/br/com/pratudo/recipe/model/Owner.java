@@ -1,19 +1,17 @@
-package br.com.pratudo.user.model.elasticsearch;
+package br.com.pratudo.recipe.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Hit {
+@Builder
+public class Owner {
 
     private String _id;
 
-    private BigDecimal _score;
-
-    private _Source _source;
+    private String name;
 }

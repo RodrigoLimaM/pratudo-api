@@ -43,16 +43,23 @@ public class RecipeController {
 
     @GetMapping("/ingredients")
     public ResponseEntity<Page<Recipe>> getRecipesByIngredients(@RequestParam(defaultValue = "") final List<String> ingredients,
-                                                                @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                                                                Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByIngredients(ingredients, pageable));
     }
 
     @GetMapping("/name")
     public ResponseEntity<Page<Recipe>> getRecipesByName(@RequestParam(defaultValue = "") final String name,
-                                                         @PageableDefault(page = 0, size = 10) Pageable pageable) {
+                                                         Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByName(name, pageable));
+    }
+
+    @GetMapping("/tag")
+    public ResponseEntity<Page<Recipe>> getRecipesByTag(@RequestParam(defaultValue = "") final List<String> tags,
+                                                         Pageable pageable) {
+        return ResponseEntity
+                .ok(recipeService.getRecipesByTag(tags, pageable));
     }
 
 }

@@ -14,4 +14,7 @@ public interface RecipeRepository extends ElasticsearchRepository<Recipe, String
 
     @Query("{\"match\":{\"ingredients.items.name\":{\"query\":\"?0\"}}}")
     Page<Recipe> findByIngredients(String ingredients, Pageable pageable);
+
+    @Query("{\"match\":{\"tags\":{\"query\":\"?0\"}}}")
+    Page<Recipe> findByTagsContains(String tags, Pageable pageable);
 }

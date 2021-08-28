@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -64,11 +63,19 @@ public class RecipeService {
     }
 
     public Page<Recipe> getRecipesByIngredients(final List<String> ingredients, final Pageable pageable) {
-        return recipeRepository.findByIngredients(ingredients.toString().replace("[", "").replace("]", ""), pageable);
+        return recipeRepository.findByIngredients(convertListToString(ingredients), pageable);
     }
 
     public Page<Recipe> getRecipesByName(final String name, final Pageable pageable) {
         return recipeRepository.findByName(name, pageable);
+    }
+
+    public Page<Recipe> getRecipesByTag(List<String> tags, Pageable pageable) {
+        return recipeRepository.findByTagsContains(convertListToString(tags), pageable);
+    }
+
+    private String convertListToString(List<String> ingredients) {
+        return ingredients.toString().replace("[", "").replace("]", "");
     }
 
 }

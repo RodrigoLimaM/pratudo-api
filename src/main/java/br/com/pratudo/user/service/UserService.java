@@ -65,7 +65,6 @@ public class UserService {
                 .title(Title.INICIANTE)
                 .badges(Badges.builder()
                         .owned(Collections.emptyList())
-                        .count(0L)
                         .possibleBadges(10L)
                         .build())
                 .build();

@@ -1,5 +1,6 @@
 package br.com.pratudo.user.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,8 +18,10 @@ public class Badges {
     @Field(name = "owned")
     private List<String> owned;
 
-    @Field(name = "count")
-    private Long count;
+    @JsonProperty
+    private Integer getCount() {
+        return owned.size();
+    }
 
     @Field(name = "possibleBadges")
     private Long possibleBadges;

@@ -3,6 +3,7 @@ package br.com.pratudo.recipe.service;
 import br.com.pratudo.recipe.model.MethodOfPreparation;
 import br.com.pratudo.recipe.model.Owner;
 import br.com.pratudo.recipe.model.Recipe;
+import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.Time;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
@@ -36,8 +37,6 @@ public class RecipeService {
 
         recipeDTO.setCreationDate(LocalDateTime.now());
 
-        recipeDTO.setRate(BigDecimal.ZERO);
-
         recipeDTO.setRatings(Collections.emptyList());
 
         final MethodOfPreparation methodOfPreparation = recipeDTO.getMethodOfPreparation();
@@ -58,8 +57,9 @@ public class RecipeService {
                 .build();
     }
 
-    public Page<Recipe> getRecipesOrderByCreationDateDesc(final Pageable pageable) {
-        return recipeRepository.findAllByOrderByCreationDateDesc(pageable);
+    public Page<SummarizedRecipe> getSummarizedRecipesOrderByCreationDateDesc(final Pageable pageable) {
+        return recipeRepository.findAllByOrderByCreationDateDesc(pageable)
+                .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }
 
     public Page<Recipe> getRecipesByIngredients(final List<String> ingredients, final Pageable pageable) {

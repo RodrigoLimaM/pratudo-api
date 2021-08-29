@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,8 +35,6 @@ public class RecipeDTO {
 
     @NotNull
     private String chefTips;
-
-    private BigDecimal rate;
 
     private List<Rating> ratings;
 

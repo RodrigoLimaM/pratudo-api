@@ -1,12 +1,12 @@
 package br.com.pratudo.recipe.controller;
 
 import br.com.pratudo.recipe.model.Recipe;
+import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,9 +36,9 @@ public class RecipeController {
     }
 
     @GetMapping("/latest")
-    public ResponseEntity<Page<Recipe>> getRecipesOrderByCreationDateDesc(@PageableDefault(page = 0, size = 10) Pageable pageable) {
+    public ResponseEntity<Page<SummarizedRecipe>> getSummarizedRecipesOrderByCreationDateDesc(Pageable pageable) {
         return ResponseEntity
-                .ok(recipeService.getRecipesOrderByCreationDateDesc(pageable));
+                .ok(recipeService.getSummarizedRecipesOrderByCreationDateDesc(pageable));
     }
 
     @GetMapping("/ingredients")

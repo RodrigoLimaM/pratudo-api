@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +61,13 @@ public class RecipeController {
                                                          Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByTag(tags, pageable));
+    }
+
+    @GetMapping("/{_id}")
+    public ResponseEntity<Recipe> getRecipeById(@PathVariable final String _id) {
+        return recipeService.getRecipeById(_id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }

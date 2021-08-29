@@ -19,8 +19,10 @@ public class Experience {
     @Field(name = "from")
     private Long from;
 
-    @Field(name = "toNextLevel")
-    private Long toNextLevel;
+    @JsonProperty
+    private Long getToNextLevel() {
+        return from - current;
+    }
 
     @JsonProperty
     private Long getPercentage() {

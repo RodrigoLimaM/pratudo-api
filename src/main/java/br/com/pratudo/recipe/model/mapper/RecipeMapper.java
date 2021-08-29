@@ -1,6 +1,7 @@
 package br.com.pratudo.recipe.model.mapper;
 
 import br.com.pratudo.recipe.model.Recipe;
+import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,4 +17,10 @@ public class RecipeMapper {
         return modelMapper.map(recipeDTO, Recipe.class);
     }
 
+    public SummarizedRecipe convertRecipeToSummarizedRecipe(Recipe recipe) {
+        SummarizedRecipe summarizedRecipe = modelMapper.map(recipe, SummarizedRecipe.class);
+        summarizedRecipe.setRate(Recipe.getRate(recipe.getRatings()));
+
+        return summarizedRecipe;
+    }
 }

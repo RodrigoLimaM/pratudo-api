@@ -14,10 +14,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -78,4 +78,7 @@ public class RecipeService {
         return ingredients.toString().replace("[", "").replace("]", "");
     }
 
+    public Optional<Recipe> getRecipeById(String _id) {
+        return recipeRepository.findById(_id);
+    }
 }

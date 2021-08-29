@@ -61,12 +61,10 @@ public class UserService {
                     .experience(Experience.builder()
                             .current(0L)
                             .from(1000L)
-                            .toNextLevel(1000L)
                             .build())
                 .title(Title.INICIANTE)
                 .badges(Badges.builder()
                         .owned(Collections.emptyList())
-                        .count(0L)
                         .possibleBadges(10L)
                         .build())
                 .build();

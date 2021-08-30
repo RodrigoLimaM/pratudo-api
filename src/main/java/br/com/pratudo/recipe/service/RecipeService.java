@@ -53,16 +53,19 @@ public class RecipeService {
                 .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }
 
-    public Page<Recipe> getRecipesByIngredients(final List<String> ingredients, final Pageable pageable) {
-        return recipeRepository.findByIngredients(convertListToString(ingredients), pageable);
+    public Page<SummarizedRecipe> getRecipesByIngredients(final List<String> ingredients, final Pageable pageable) {
+        return recipeRepository.findByIngredients(convertListToString(ingredients), pageable)
+                .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }
 
-    public Page<Recipe> getRecipesByName(final String name, final Pageable pageable) {
-        return recipeRepository.findByName(name, pageable);
+    public Page<SummarizedRecipe> getRecipesByName(final String name, final Pageable pageable) {
+        return recipeRepository.findByName(name, pageable)
+                .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }
 
-    public Page<Recipe> getRecipesByTag(List<String> tags, Pageable pageable) {
-        return recipeRepository.findByTagsContains(convertListToString(tags), pageable);
+    public Page<SummarizedRecipe> getRecipesByTag(List<String> tags, Pageable pageable) {
+        return recipeRepository.findByTagsContains(convertListToString(tags), pageable)
+                .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }
 
     private String convertListToString(List<String> ingredients) {

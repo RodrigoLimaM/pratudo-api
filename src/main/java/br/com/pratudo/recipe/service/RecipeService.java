@@ -1,10 +1,8 @@
 package br.com.pratudo.recipe.service;
 
-import br.com.pratudo.recipe.model.MethodOfPreparation;
 import br.com.pratudo.recipe.model.Owner;
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
-import br.com.pratudo.recipe.model.Time;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
@@ -18,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class RecipeService {
@@ -38,12 +35,6 @@ public class RecipeService {
         recipeDTO.setCreationDate(LocalDateTime.now());
 
         recipeDTO.setRatings(Collections.emptyList());
-
-        final MethodOfPreparation methodOfPreparation = recipeDTO.getMethodOfPreparation();
-        methodOfPreparation.setTime(new Time());
-        final Time totalMethodOfPreparationTime = methodOfPreparation.getTime();
-        totalMethodOfPreparationTime.setTimeUnit(TimeUnit.MINUTES);
-        totalMethodOfPreparationTime.setValue(methodOfPreparation.getTotalMinutesInMethodOfPreparation());
 
         recipeDTO.setComments(Collections.emptyList());
 

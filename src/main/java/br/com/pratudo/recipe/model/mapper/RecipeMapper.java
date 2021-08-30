@@ -20,6 +20,8 @@ public class RecipeMapper {
     public SummarizedRecipe convertRecipeToSummarizedRecipe(Recipe recipe) {
         SummarizedRecipe summarizedRecipe = modelMapper.map(recipe, SummarizedRecipe.class);
         summarizedRecipe.setRate(Recipe.getRate(recipe.getRatings()));
+        summarizedRecipe.setIsNew(Recipe.isNew(recipe.getCreationDate()));
+        summarizedRecipe.setTotalMethodOfPreparationTime(Recipe.getTotalMethodOfPreparationTime(recipe.getMethodOfPreparation()));
 
         return summarizedRecipe;
     }

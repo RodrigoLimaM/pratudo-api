@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @AllArgsConstructor
@@ -26,4 +25,8 @@ public class SummarizedRecipe {
     private Difficulty difficulty;
 
     private Double rate;
+
+    private Boolean isNew;
+
+    private Time totalMethodOfPreparationTime;
 }

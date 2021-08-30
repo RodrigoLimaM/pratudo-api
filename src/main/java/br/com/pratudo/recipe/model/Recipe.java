@@ -12,8 +12,10 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,6 +42,11 @@ public class Recipe {
     @Field(type = FieldType.Date, name = "creationDate", format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime creationDate;
 
+    @JsonProperty("isNew")
+    private Boolean isNew() {
+        return isNew(creationDate);
+    }
+
     @Field(name = "chefTips")
     private String chefTips;
 
@@ -57,18 +64,44 @@ public class Recipe {
     @Field(name = "methodOfPreparation")
     private MethodOfPreparation methodOfPreparation;
 
+    @JsonProperty
+    public Time getTotalMethodOfPreparationTime() {
+        return getTotalMethodOfPreparationTime(methodOfPreparation);
+    }
+
     @Field(name = "comments")
     private List<Comment> comments;
 
     @Field(name = "tags")
     private List<String> tags;
 
-    public static Double getRate(List<Rating> ratings){
+    public static Double getRate(List<Rating> ratings) {
         return ratings.stream()
                 .map(Rating::getRating)
                 .map(Objects::requireNonNull)
                 .mapToDouble(value -> value)
                 .average()
                 .orElse(0.0);
+    }
+
+    public static Boolean isNew(LocalDateTime creationDate) {
+        return ChronoUnit.DAYS.between(creationDate, LocalDateTime.now()) < 4;
+    }
+
+    public static Time getTotalMethodOfPreparationTime(MethodOfPreparation methodOfPreparation) {
+        return Time.builder()
+                .value(
+                        methodOfPreparation.getSteps().stream()
+                                .map(
+                                        step -> step.getMethodOfPreparationItem()
+                                                .stream()
+                                                .map(MethodOfPreparationItem::getTime)
+                                                .map(stepTime -> stepTime.getTimeUnit().toMinutes(stepTime.getValue()))
+                                                .reduce(0L, Long::sum)
+                                )
+                                .reduce(0L, Long::sum)
+                )
+                .timeUnit(TimeUnit.MINUTES)
+                .build();
     }
 }

@@ -2,6 +2,7 @@ package br.com.pratudo.recipe.controller;
 
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
+import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,22 +44,22 @@ public class RecipeController {
     }
 
     @GetMapping("/ingredients")
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByIngredients(@RequestParam(defaultValue = "") final List<String> ingredients,
-                                                                Pageable pageable) {
+    public ResponseEntity<Page<SummarizedRecipeWithIngredients>> getRecipesByIngredients(@RequestParam(defaultValue = "") final List<String> ingredients,
+                                                                                         Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByIngredients(ingredients, pageable));
     }
 
     @GetMapping("/name")
     public ResponseEntity<Page<SummarizedRecipe>> getRecipesByName(@RequestParam(defaultValue = "") final String name,
-                                                         Pageable pageable) {
+                                                                   Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByName(name, pageable));
     }
 
     @GetMapping("/tag")
     public ResponseEntity<Page<SummarizedRecipe>> getRecipesByTag(@RequestParam(defaultValue = "") final List<String> tags,
-                                                         Pageable pageable) {
+                                                                  Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByTag(tags, pageable));
     }

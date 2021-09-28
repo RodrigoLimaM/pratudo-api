@@ -12,6 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
@@ -34,6 +35,16 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         );
 
         return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    @ExceptionHandler(CouldNotAnalyzeException.class)
+    public ResponseEntity<Object> handleCouldNotAnalyzeExceptionException() {
+        ErrorResponse errorResponse = new ErrorResponse(
+                INTERNAL_SERVER_ERROR.value(),
+                "Não foi possível possível processar a requisição."
+        );
+
+        return ResponseEntity.internalServerError().body(errorResponse);
     }
 
     @Override

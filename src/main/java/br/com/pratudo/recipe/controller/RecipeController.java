@@ -2,6 +2,7 @@ package br.com.pratudo.recipe.controller;
 
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
+import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,8 @@ public class RecipeController {
     }
 
     @GetMapping("/ingredients")
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByIngredients(@RequestParam(defaultValue = "") final List<String> ingredients,
-                                                                Pageable pageable) {
+    public ResponseEntity<Page<SummarizedRecipeWithIngredients>> getRecipesByIngredients(@RequestParam(defaultValue = "") final List<String> ingredients,
+                                                                                         Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByIngredients(ingredients, pageable));
     }

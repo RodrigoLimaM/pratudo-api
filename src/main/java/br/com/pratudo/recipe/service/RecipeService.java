@@ -3,10 +3,12 @@ package br.com.pratudo.recipe.service;
 import br.com.pratudo.recipe.model.Owner;
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
+import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.utils.SecurityUtils;
+import br.com.pratudo.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +30,9 @@ public class RecipeService {
 
     @Autowired
     SecurityUtils securityUtils;
+
+    @Autowired
+    StringUtils stringUtils;
 
     public Recipe createRecipe(final RecipeDTO recipeDTO) {
         recipeDTO.setOwner(buildInitialOwner());
@@ -53,9 +58,9 @@ public class RecipeService {
                 .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }
 
-    public Page<SummarizedRecipe> getRecipesByIngredients(final List<String> ingredients, final Pageable pageable) {
-        return recipeRepository.findByIngredients(convertListToString(ingredients), pageable)
-                .map(recipeMapper::convertRecipeToSummarizedRecipe);
+    public Page<SummarizedRecipeWithIngredients> getRecipesByIngredients(final List<String> ingredients, final Pageable pageable) {
+        return recipeRepository.findByIngredients(stringUtils.convertListToString(ingredients), pageable)
+                .map(recipe -> recipeMapper.convertRecipeToSummarizedRecipeWithIngredients(recipe, ingredients, recipe.getIngredients()));
     }
 
     public Page<SummarizedRecipe> getRecipesByName(final String name, final Pageable pageable) {
@@ -64,13 +69,10 @@ public class RecipeService {
     }
 
     public Page<SummarizedRecipe> getRecipesByTag(List<String> tags, Pageable pageable) {
-        return recipeRepository.findByTagsContains(convertListToString(tags), pageable)
+        return recipeRepository.findByTagsContains(stringUtils.convertListToString(tags), pageable)
                 .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }
 
-    private String convertListToString(List<String> ingredients) {
-        return ingredients.toString().replace("[", "").replace("]", "");
-    }
 
     public Optional<Recipe> getRecipeById(String _id) {
         return recipeRepository.findById(_id);

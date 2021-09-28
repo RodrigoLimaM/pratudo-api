@@ -52,14 +52,14 @@ public class RecipeController {
 
     @GetMapping("/name")
     public ResponseEntity<Page<SummarizedRecipe>> getRecipesByName(@RequestParam(defaultValue = "") final String name,
-                                                         Pageable pageable) {
+                                                                   Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByName(name, pageable));
     }
 
     @GetMapping("/tag")
     public ResponseEntity<Page<SummarizedRecipe>> getRecipesByTag(@RequestParam(defaultValue = "") final List<String> tags,
-                                                         Pageable pageable) {
+                                                                  Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByTag(tags, pageable));
     }

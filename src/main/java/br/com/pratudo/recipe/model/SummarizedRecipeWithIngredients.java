@@ -25,9 +25,11 @@ public class SummarizedRecipeWithIngredients extends SummarizedRecipe {
     public void setFormattedIngredients(List<String> selectedIngredients, List<Ingredient> ingredients) {
         PortugueseAnalyzer portugueseAnalyzer = new PortugueseAnalyzer();
         StringUtils stringUtils = new StringUtils();
+
         List<String> markedSelectedIngredients = new ArrayList<>();
         List<String> unmarkedSelectedIngredients = new ArrayList<>();
         List<String> analyzedSelectedIngredients = new ArrayList<>();
+
         selectedIngredients.forEach(selectedIngredient -> {
             try {
                 analyzedSelectedIngredients.addAll(analyze(selectedIngredient, portugueseAnalyzer));
@@ -49,7 +51,8 @@ public class SummarizedRecipeWithIngredients extends SummarizedRecipe {
             }
         }
 
-        List<String> result = Stream.concat(markedSelectedIngredients.stream(), unmarkedSelectedIngredients.stream()).distinct().collect(Collectors.toList());
+        List<String> result = Stream.concat(markedSelectedIngredients.stream(),
+                unmarkedSelectedIngredients.stream()).distinct().collect(Collectors.toList());
         String ingredientList = null;
 
         if (result.size() > 10) {

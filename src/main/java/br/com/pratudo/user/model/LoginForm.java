@@ -1,7 +1,6 @@
 package br.com.pratudo.user.model;
 
 import lombok.Data;
-import lombok.ToString;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 @Data

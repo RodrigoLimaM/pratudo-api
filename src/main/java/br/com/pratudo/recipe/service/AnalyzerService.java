@@ -18,9 +18,11 @@ public class AnalyzerService {
             TokenStream tokenStream = portugueseAnalyzer.tokenStream("ingredient", text);
             CharTermAttribute attr = tokenStream.addAttribute(CharTermAttribute.class);
             tokenStream.reset();
+
             while(tokenStream.incrementToken()) {
                 result.add(attr.toString());
             }
+
             tokenStream.close();
             return result;
         }

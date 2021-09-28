@@ -107,18 +107,17 @@ public class RecipeService {
             }
         });
 
-        for (Ingredient ingredient: totalIngredients) {
-            for (IngredientItem item : ingredient.getIngredientItems()) {
-                try {
-                    if (containsAnyItemFrom(analyzedSelectedIngredients, item))
-                        markedSelectedIngredients.add(INGREDIENT_MARKER + item.getName() + INGREDIENT_MARKER);
-                    else
-                        unmarkedSelectedIngredients.add(item.getName());
-                } catch (IOException e) {
-                    throw new CouldNotAnalyzeException();
-                }
-            }
-        }
+        totalIngredients.forEach(ingredient -> ingredient.getIngredientItems()
+                .forEach(item -> {
+                    try {
+                        if (containsAnyItemFrom(analyzedSelectedIngredients, item))
+                            markedSelectedIngredients.add(INGREDIENT_MARKER + item.getName() + INGREDIENT_MARKER);
+                        else
+                            unmarkedSelectedIngredients.add(item.getName());
+                    } catch (IOException e) {
+                        throw new CouldNotAnalyzeException();
+                    }
+                }));
 
         List<String> result = Stream.concat(markedSelectedIngredients.stream(),
                         unmarkedSelectedIngredients.stream())

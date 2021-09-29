@@ -1,6 +1,5 @@
 package br.com.pratudo.recipe.model.mapper;
 
-import br.com.pratudo.recipe.model.Ingredient;
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
@@ -8,8 +7,6 @@ import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class RecipeMapper {
@@ -30,12 +27,13 @@ public class RecipeMapper {
         return summarizedRecipe;
     }
 
-    public SummarizedRecipeWithIngredients convertRecipeToSummarizedRecipeWithIngredients(Recipe recipe, List<String> selectedIngredients, List<Ingredient> ingredients) {
+    public SummarizedRecipeWithIngredients convertRecipeToSummarizedRecipeWithIngredients(Recipe recipe, String formattedIngredients) {
         SummarizedRecipeWithIngredients summarizedRecipeWithIngredients = modelMapper.map(recipe, SummarizedRecipeWithIngredients.class);
         summarizedRecipeWithIngredients.setRate(Recipe.getRate(recipe.getRatings()));
         summarizedRecipeWithIngredients.setIsNew(Recipe.isNew(recipe.getCreationDate()));
         summarizedRecipeWithIngredients.setTotalMethodOfPreparationTime(Recipe.getTotalMethodOfPreparationTime(recipe.getMethodOfPreparation()));
-        summarizedRecipeWithIngredients.setFormattedIngredients(selectedIngredients, ingredients);
+        summarizedRecipeWithIngredients.setFormattedIngredients(formattedIngredients);
+
         return summarizedRecipeWithIngredients;
     }
 }

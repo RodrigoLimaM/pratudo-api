@@ -4,6 +4,7 @@ import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
+import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/recipe")
@@ -69,6 +72,17 @@ public class RecipeController {
         return recipeService.getRecipeById(_id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<String>> getCategories() {
+        return ResponseEntity.ok(
+                Arrays.stream(
+                        Category.values())
+                        .map(Category::getDescription)
+                        .collect(Collectors.toList()
+                        )
+        );
     }
 
 }

@@ -5,6 +5,7 @@ import br.com.pratudo.recipe.model.Ingredient;
 import br.com.pratudo.recipe.model.MethodOfPreparation;
 import br.com.pratudo.recipe.model.Owner;
 import br.com.pratudo.recipe.model.Rating;
+import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.model.enums.Difficulty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,4 +50,7 @@ public class RecipeDTO {
     private List<Comment> comments;
 
     private List<String> tags;
+
+    @NotEmpty
+    private List<Category> categories;
 }

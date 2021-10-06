@@ -4,6 +4,7 @@ import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
+import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -62,6 +63,18 @@ public class RecipeController {
                                                                   Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByTag(tags, pageable));
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByCategories(@RequestParam List<Category> categories,
+                                                                         Pageable pageable) {
+        return ResponseEntity
+                .ok(recipeService.getRecipesByCategories(categories, pageable));
+    }
+
+    @GetMapping("/availableCategories")
+    public ResponseEntity<Category[]> getAvailableCategories() {
+        return ResponseEntity.ok(Category.values());
     }
 
     @GetMapping("/{_id}")

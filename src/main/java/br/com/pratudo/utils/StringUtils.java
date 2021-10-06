@@ -7,7 +7,7 @@ import java.util.List;
 @Component
 public class StringUtils {
 
-    public String convertListToString(List<String> ingredients) {
+    public String convertListToStringSeparatedWithCommas(List<String> ingredients) {
         return ingredients.toString().replace("[", "").replace("]", "");
     }
 }

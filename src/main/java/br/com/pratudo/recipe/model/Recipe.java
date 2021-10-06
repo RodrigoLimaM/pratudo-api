@@ -1,5 +1,6 @@
 package br.com.pratudo.recipe.model;
 
+import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.model.enums.Difficulty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -74,6 +75,9 @@ public class Recipe {
 
     @Field(name = "tags")
     private List<String> tags;
+
+    @Field(name = "categories")
+    private List<Category> categories;
 
     public static Double getRate(List<Rating> ratings) {
         return ratings.stream()

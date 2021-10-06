@@ -15,7 +15,7 @@ public enum Category {
     VEGETARIAN("Vegetariano"),
     DRINKS("Bebidas"),
     CANDIES("Doces"),
-    OTHER("Outros")
+    OTHERS("Outros")
     ;
 
     private String description;

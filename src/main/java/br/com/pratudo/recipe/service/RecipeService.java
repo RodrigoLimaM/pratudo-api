@@ -8,6 +8,7 @@ import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
+import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.utils.SecurityUtils;
@@ -75,7 +76,7 @@ public class RecipeService {
     }
 
     public Page<SummarizedRecipeWithIngredients> getRecipesByIngredients(final List<String> ingredients, final Pageable pageable) {
-        return recipeRepository.findByIngredients(stringUtils.convertListToString(ingredients), pageable)
+        return recipeRepository.findByIngredients(stringUtils.convertListToStringSeparatedWithCommas(ingredients), pageable)
                 .map(recipe -> recipeMapper.convertRecipeToSummarizedRecipeWithIngredients(recipe, getFormattedIngredients(ingredients, recipe.getIngredients())));
     }
 
@@ -85,10 +86,14 @@ public class RecipeService {
     }
 
     public Page<SummarizedRecipe> getRecipesByTag(List<String> tags, Pageable pageable) {
-        return recipeRepository.findByTagsContains(stringUtils.convertListToString(tags), pageable)
+        return recipeRepository.findByTagsContains(stringUtils.convertListToStringSeparatedWithCommas(tags), pageable)
                 .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }
 
+    public Page<SummarizedRecipe> getRecipeByCategories(List<Category> categories, Pageable pageable) {
+        return recipeRepository.findByCategoriesIn(categories, pageable)
+                .map(recipeMapper::convertRecipeToSummarizedRecipe);
+    }
 
     public Optional<Recipe> getRecipeById(String _id) {
         return recipeRepository.findById(_id);
@@ -135,10 +140,11 @@ public class RecipeService {
         String ingredientList;
         if (result.size() > FORMATTED_INGREDIENTS_ITEMS_SIZE) {
             result = result.stream().limit(FORMATTED_INGREDIENTS_ITEMS_SIZE).collect(Collectors.toList());
-            ingredientList = "Ingredientes: " + stringUtils.convertListToString(result) + "...";
+            ingredientList = "Ingredientes: " + stringUtils.convertListToStringSeparatedWithCommas(result) + "...";
         } else {
-            ingredientList = "Ingredientes: " + stringUtils.convertListToString(result) + ".";
+            ingredientList = "Ingredientes: " + stringUtils.convertListToStringSeparatedWithCommas(result) + ".";
         }
         return ingredientList;
     }
+
 }

@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/recipe")
@@ -67,22 +65,23 @@ public class RecipeController {
                 .ok(recipeService.getRecipesByTag(tags, pageable));
     }
 
+    @GetMapping("/categories")
+    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByCategories(@RequestParam List<Category> categories,
+                                                                         Pageable pageable) {
+        return ResponseEntity
+                .ok(recipeService.getRecipeByCategories(categories, pageable));
+    }
+
+    @GetMapping("/availableCategories")
+    public ResponseEntity<Category[]> getAvailableCategories() {
+        return ResponseEntity.ok(Category.values());
+    }
+
     @GetMapping("/{_id}")
     public ResponseEntity<Recipe> getRecipeById(@PathVariable final String _id) {
         return recipeService.getRecipeById(_id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/categories")
-    public ResponseEntity<List<String>> getCategories() {
-        return ResponseEntity.ok(
-                Arrays.stream(
-                        Category.values())
-                        .map(Category::getDescription)
-                        .collect(Collectors.toList()
-                        )
-        );
     }
 
 }

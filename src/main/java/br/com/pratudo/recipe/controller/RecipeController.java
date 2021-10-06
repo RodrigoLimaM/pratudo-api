@@ -69,7 +69,7 @@ public class RecipeController {
     public ResponseEntity<Page<SummarizedRecipe>> getRecipesByCategories(@RequestParam List<Category> categories,
                                                                          Pageable pageable) {
         return ResponseEntity
-                .ok(recipeService.getRecipeByCategories(categories, pageable));
+                .ok(recipeService.getRecipesByCategories(categories, pageable));
     }
 
     @GetMapping("/availableCategories")

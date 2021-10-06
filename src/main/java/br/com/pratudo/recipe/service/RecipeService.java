@@ -90,7 +90,7 @@ public class RecipeService {
                 .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }
 
-    public Page<SummarizedRecipe> getRecipeByCategories(List<Category> categories, Pageable pageable) {
+    public Page<SummarizedRecipe> getRecipesByCategories(List<Category> categories, Pageable pageable) {
         return recipeRepository.findByCategoriesIn(categories, pageable)
                 .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }

@@ -40,6 +40,9 @@ public class Recipe {
     @Field(name = "difficulty")
     private Difficulty difficulty;
 
+    @Field(name = "serves")
+    private Integer serves;
+
     @Field(type = FieldType.Date, name = "creationDate", format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime creationDate;
 

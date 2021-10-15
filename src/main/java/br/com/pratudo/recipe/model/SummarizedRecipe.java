@@ -24,6 +24,8 @@ public class SummarizedRecipe {
 
     private Difficulty difficulty;
 
+    private Integer serves;
+
     private Double rate;
 
     private Boolean isNew;

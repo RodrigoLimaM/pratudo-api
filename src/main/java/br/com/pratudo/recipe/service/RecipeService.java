@@ -39,7 +39,7 @@ public class RecipeService {
     AnalyzerService analyzerService;
 
     @Autowired
-    SearcherByCriteria searcherByCriteria;
+    SearcherByCriteriaFactory searcherByCriteriaFactory;
 
     public Recipe createRecipe(final RecipeDTO recipeDTO) {
         recipeDTO.setOwner(buildInitialOwner());
@@ -80,7 +80,7 @@ public class RecipeService {
     }
 
     public Page<SummarizedRecipe> getRecipesByCriteria(Pageable pageable, Criteria criteria, List<String> ingredients) {
-        return searcherByCriteria.getUserIdByTypeInstance(criteria)
+        return searcherByCriteriaFactory.getUserIdByTypeInstance(criteria)
                 .getRecipesByCriteria(pageable, ingredients);
     }
 }

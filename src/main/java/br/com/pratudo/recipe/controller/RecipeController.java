@@ -42,7 +42,9 @@ public class RecipeController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByCriteria(Pageable pageable, @RequestParam Criteria criteria, @RequestParam(required = false, defaultValue = "") List<String> ingredients) {
+    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByCriteria(Pageable pageable,
+                                                                       @RequestParam Criteria criteria,
+                                                                       @RequestParam(required = false, defaultValue = "") List<String> ingredients) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByCriteria(pageable, criteria, ingredients));
     }

@@ -23,7 +23,6 @@ public class LatestCriteria implements Searcher {
         this.recipeMapper = recipeMapper;
     }
 
-
     @Override
     public Page<SummarizedRecipe> getRecipesByCriteria(Pageable pageable, List<String> ingredients) {
         return recipeRepository.findAllByOrderByCreationDateDesc(pageable)

@@ -7,8 +7,7 @@ import lombok.Getter;
 @Getter
 public enum Criteria {
     LATEST("Recentes", true),
-    BY_INGREDIENTS(null , false)
-    ;
+    BY_INGREDIENTS(null , false);
 
     private String description;
 

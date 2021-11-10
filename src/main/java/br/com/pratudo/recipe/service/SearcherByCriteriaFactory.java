@@ -11,15 +11,15 @@ import java.util.EnumMap;
 import java.util.Map;
 
 @Component
-public class SearcherByCriteria {
+public class SearcherByCriteriaFactory {
 
     private static final Map<Criteria, Searcher> CRITERIA_BY_SEARCHER_MAP = new EnumMap<>(Criteria.class);
 
     @Autowired
-    public SearcherByCriteria(RecipeRepository recipeRepository,
-                              RecipeMapper recipeMapper,
-                              StringUtils stringUtils,
-                              AnalyzerService analyzerService) {
+    public SearcherByCriteriaFactory(RecipeRepository recipeRepository,
+                                     RecipeMapper recipeMapper,
+                                     StringUtils stringUtils,
+                                     AnalyzerService analyzerService) {
         CRITERIA_BY_SEARCHER_MAP.put(Criteria.LATEST, new LatestCriteria(recipeRepository, recipeMapper));
         CRITERIA_BY_SEARCHER_MAP.put(Criteria.BY_INGREDIENTS, new ByIngredientsCriteria(recipeRepository, recipeMapper, stringUtils, analyzerService));
     }

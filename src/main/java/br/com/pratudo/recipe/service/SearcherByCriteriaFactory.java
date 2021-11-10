@@ -22,6 +22,9 @@ public class SearcherByCriteriaFactory {
                                      AnalyzerService analyzerService) {
         CRITERIA_BY_SEARCHER_MAP.put(Criteria.LATEST, new LatestCriteria(recipeRepository, recipeMapper));
         CRITERIA_BY_SEARCHER_MAP.put(Criteria.BY_INGREDIENTS, new ByIngredientsCriteria(recipeRepository, recipeMapper, stringUtils, analyzerService));
+        CRITERIA_BY_SEARCHER_MAP.put(Criteria.BY_NAME, new ByNameCriteria(recipeRepository, recipeMapper));
+        CRITERIA_BY_SEARCHER_MAP.put(Criteria.BY_CATEGORIES, new ByCategories(recipeRepository, recipeMapper));
+
     }
 
     public Searcher getUserIdByTypeInstance(Criteria criteria) {

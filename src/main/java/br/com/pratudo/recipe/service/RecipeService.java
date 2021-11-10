@@ -60,27 +60,12 @@ public class RecipeService {
                 .build();
     }
 
-    public Page<SummarizedRecipe> getRecipesByName(final String name, final Pageable pageable) {
-        return recipeRepository.findByName(name, pageable)
-                .map(recipeMapper::convertRecipeToSummarizedRecipe);
-    }
-
-    public Page<SummarizedRecipe> getRecipesByTag(List<String> tags, Pageable pageable) {
-        return recipeRepository.findByTagsContains(stringUtils.convertListToStringSeparatedWithCommas(tags), pageable)
-                .map(recipeMapper::convertRecipeToSummarizedRecipe);
-    }
-
-    public Page<SummarizedRecipe> getRecipesByCategories(List<Category> categories, Pageable pageable) {
-        return recipeRepository.findByCategoriesIn(categories, pageable)
-                .map(recipeMapper::convertRecipeToSummarizedRecipe);
-    }
-
     public Optional<Recipe> getRecipeById(String _id) {
         return recipeRepository.findById(_id);
     }
 
-    public Page<SummarizedRecipe> getRecipesByCriteria(Pageable pageable, Criteria criteria, List<String> ingredients) {
+    public Page<SummarizedRecipe> getRecipesByCriteria(Pageable pageable, Criteria criteria, List<String> ingredients, String name, List<Category> categories) {
         return searcherByCriteriaFactory.getUserIdByTypeInstance(criteria)
-                .getRecipesByCriteria(pageable, ingredients);
+                .getRecipesByCriteria(pageable, ingredients, name, categories);
     }
 }

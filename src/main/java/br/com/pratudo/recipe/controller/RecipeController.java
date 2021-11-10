@@ -44,9 +44,11 @@ public class RecipeController {
     @GetMapping
     public ResponseEntity<Page<SummarizedRecipe>> getRecipesByCriteria(Pageable pageable,
                                                                        @RequestParam Criteria criteria,
-                                                                       @RequestParam(required = false, defaultValue = "") List<String> ingredients) {
+                                                                       @RequestParam(required = false, defaultValue = "") List<String> ingredients,
+                                                                       @RequestParam(required = false, defaultValue = "") String name,
+                                                                       @RequestParam(required = false, defaultValue = "") List<Category> categories) {
         return ResponseEntity
-                .ok(recipeService.getRecipesByCriteria(pageable, criteria, ingredients));
+                .ok(recipeService.getRecipesByCriteria(pageable, criteria, ingredients, name, categories));
     }
 
     @GetMapping("/criterias")
@@ -62,27 +64,6 @@ public class RecipeController {
 
         return ResponseEntity
                 .ok(keyValues);
-    }
-
-    @GetMapping("/name")
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByName(@RequestParam(defaultValue = "") final String name,
-                                                                   Pageable pageable) {
-        return ResponseEntity
-                .ok(recipeService.getRecipesByName(name, pageable));
-    }
-
-    @GetMapping("/tag")
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByTag(@RequestParam(defaultValue = "") final List<String> tags,
-                                                                  Pageable pageable) {
-        return ResponseEntity
-                .ok(recipeService.getRecipesByTag(tags, pageable));
-    }
-
-    @GetMapping("/categories")
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByCategories(@RequestParam List<Category> categories,
-                                                                         Pageable pageable) {
-        return ResponseEntity
-                .ok(recipeService.getRecipesByCategories(categories, pageable));
     }
 
     @GetMapping("/availableCategories")

@@ -4,6 +4,7 @@ import br.com.pratudo.config.exception.CouldNotAnalyzeException;
 import br.com.pratudo.recipe.model.Ingredient;
 import br.com.pratudo.recipe.model.IngredientItem;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
+import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.utils.StringUtils;
@@ -43,7 +44,7 @@ class ByIngredientsCriteria implements Searcher {
     }
 
     @Override
-    public Page<SummarizedRecipe> getRecipesByCriteria(Pageable pageable, List<String> ingredients) {
+    public Page<SummarizedRecipe> getRecipesByCriteria(Pageable pageable, List<String> ingredients, String name, List<Category> categories) {
         return recipeRepository.findByIngredients(stringUtils.convertListToStringSeparatedWithCommas(ingredients), pageable)
                 .map(recipe -> recipeMapper.convertRecipeToSummarizedRecipeWithIngredients(recipe, getFormattedIngredients(ingredients, recipe.getIngredients())));
     }

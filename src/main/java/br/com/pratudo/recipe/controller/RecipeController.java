@@ -2,10 +2,11 @@ package br.com.pratudo.recipe.controller;
 
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
-import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.enums.Category;
+import br.com.pratudo.recipe.model.enums.Criteria;
 import br.com.pratudo.recipe.service.RecipeService;
+import br.com.pratudo.user.model.KeyValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -38,38 +41,29 @@ public class RecipeController {
                 .body(recipe);
     }
 
-    @GetMapping("/latest")
-    public ResponseEntity<Page<SummarizedRecipe>> getSummarizedRecipesOrderByCreationDateDesc(Pageable pageable) {
+    @GetMapping
+    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByCriteria(Pageable pageable,
+                                                                       @RequestParam Criteria criteria,
+                                                                       @RequestParam(required = false, defaultValue = "") List<String> ingredients,
+                                                                       @RequestParam(required = false, defaultValue = "") String name,
+                                                                       @RequestParam(required = false, defaultValue = "") List<Category> categories) {
         return ResponseEntity
-                .ok(recipeService.getSummarizedRecipesOrderByCreationDateDesc(pageable));
+                .ok(recipeService.getRecipesByCriteria(pageable, criteria, ingredients, name, categories));
     }
 
-    @GetMapping("/ingredients")
-    public ResponseEntity<Page<SummarizedRecipeWithIngredients>> getRecipesByIngredients(@RequestParam(defaultValue = "") final List<String> ingredients,
-                                                                                         Pageable pageable) {
-        return ResponseEntity
-                .ok(recipeService.getRecipesByIngredients(ingredients, pageable));
-    }
+    @GetMapping("/criterias")
+    public ResponseEntity<List<KeyValue>> getCriterias() {
+        List<KeyValue> keyValues = new ArrayList<>();
 
-    @GetMapping("/name")
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByName(@RequestParam(defaultValue = "") final String name,
-                                                                   Pageable pageable) {
-        return ResponseEntity
-                .ok(recipeService.getRecipesByName(name, pageable));
-    }
+        Arrays.stream(Criteria.values()).filter(Criteria::isTab)
+                .forEach(criteria -> keyValues.add(KeyValue.builder()
+                        .key(criteria.name())
+                        .value(criteria.getDescription())
+                        .build())
+                );
 
-    @GetMapping("/tag")
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByTag(@RequestParam(defaultValue = "") final List<String> tags,
-                                                                  Pageable pageable) {
         return ResponseEntity
-                .ok(recipeService.getRecipesByTag(tags, pageable));
-    }
-
-    @GetMapping("/categories")
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByCategories(@RequestParam List<Category> categories,
-                                                                         Pageable pageable) {
-        return ResponseEntity
-                .ok(recipeService.getRecipesByCategories(categories, pageable));
+                .ok(keyValues);
     }
 
     @GetMapping("/availableCategories")

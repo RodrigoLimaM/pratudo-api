@@ -97,7 +97,8 @@ public class RecipeController {
                         )
                 );
 
-        return ResponseEntity.ok(unitOfMeasureValues);
+        return ResponseEntity
+                .ok(unitOfMeasureValues);
     }
 
     @GetMapping("/{_id}")

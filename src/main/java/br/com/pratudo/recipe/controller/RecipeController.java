@@ -2,11 +2,13 @@ package br.com.pratudo.recipe.controller;
 
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
+import br.com.pratudo.recipe.model.UnitOfMeasureValues;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.model.enums.Criteria;
+import br.com.pratudo.recipe.model.enums.UnitOfMeasure;
 import br.com.pratudo.recipe.service.RecipeService;
-import br.com.pratudo.user.model.KeyValue;
+import br.com.pratudo.recipe.model.KeyValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,9 +68,37 @@ public class RecipeController {
                 .ok(keyValues);
     }
 
-    @GetMapping("/availableCategories")
-    public ResponseEntity<Category[]> getAvailableCategories() {
-        return ResponseEntity.ok(Category.values());
+    @GetMapping("/categories")
+    public ResponseEntity<List<KeyValue>> getCategories() {
+        List<KeyValue> keyValues = new ArrayList<>();
+
+        Arrays.stream(Category.values())
+                .forEach(category -> keyValues.add(KeyValue.builder()
+                        .key(category.name())
+                        .value(category.getDescription())
+                        .build())
+                );
+
+        return ResponseEntity
+                .ok(keyValues);
+    }
+
+    @GetMapping("/units-of-measure")
+    public ResponseEntity<List<UnitOfMeasureValues>> getUnitsOfMeasure() {
+        List<UnitOfMeasureValues> unitOfMeasureValues = new ArrayList<>();
+
+        Arrays.stream(UnitOfMeasure.values())
+                .forEach(unitOfMeasure -> unitOfMeasureValues.add(
+                        UnitOfMeasureValues.builder()
+                                .key(unitOfMeasure.name())
+                                .translate(unitOfMeasure.getTranslation())
+                                .abbreviation(unitOfMeasure.getAbbreviation())
+                                .build()
+                        )
+                );
+
+        return ResponseEntity
+                .ok(unitOfMeasureValues);
     }
 
     @GetMapping("/{_id}")

@@ -46,7 +46,7 @@ public class RecipeController {
     }
 
     @GetMapping("/trend")
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByTrend(Pageable pageable, @RequestParam Trend trend) {
+    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByTrend(Pageable pageable, @RequestParam(value = "filter") Trend trend) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByTrend(pageable, trend));
     }
@@ -62,7 +62,7 @@ public class RecipeController {
                 .ok(recipeService.getRecipesByQuery(pageable, categories, difficulties, serves, name, ingredients));
     }
 
-    @GetMapping("/criterias")
+    @GetMapping("/trends")
     public ResponseEntity<List<KeyValue>> getCriterias() {
         List<KeyValue> keyValues = new ArrayList<>();
 

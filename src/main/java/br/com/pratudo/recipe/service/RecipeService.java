@@ -5,9 +5,11 @@ import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.enums.Category;
-import br.com.pratudo.recipe.model.enums.Criteria;
+import br.com.pratudo.recipe.model.enums.Trend;
+import br.com.pratudo.recipe.model.enums.Difficulty;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
+import br.com.pratudo.recipe.repository.RecipeTemplateRepository;
 import br.com.pratudo.utils.SecurityUtils;
 import br.com.pratudo.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class RecipeService {
 
     @Autowired
     RecipeRepository recipeRepository;
+
+    @Autowired
+    RecipeTemplateRepository recipeTemplateRepository;
 
     @Autowired
     RecipeMapper recipeMapper;
@@ -64,8 +69,13 @@ public class RecipeService {
         return recipeRepository.findById(_id);
     }
 
-    public Page<SummarizedRecipe> getRecipesByCriteria(Pageable pageable, Criteria criteria, List<String> ingredients, String name, List<Category> categories) {
-        return searcherByCriteriaFactory.getUserIdByTypeInstance(criteria)
-                .getRecipesByCriteria(pageable, ingredients, name, categories);
+    public Page<SummarizedRecipe> getRecipesByTrend(Pageable pageable, Trend trend) {
+        return searcherByCriteriaFactory.getUserIdByTypeInstance(trend)
+                .getRecipesByTrend(pageable);
+    }
+
+    public Page<SummarizedRecipe> getRecipesByQuery(Pageable pageable, List<Category> categories, List<Difficulty> difficulties, Long serves, String name, List<String> ingredients) {
+        return recipeTemplateRepository.getRecipeByQuery(pageable, categories, difficulties, serves, name, ingredients)
+                .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }
 }

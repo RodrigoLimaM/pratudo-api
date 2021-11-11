@@ -1,15 +1,12 @@
 package br.com.pratudo.recipe.service;
 
 import br.com.pratudo.recipe.model.SummarizedRecipe;
-import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class LatestCriteria implements Searcher {
@@ -25,7 +22,7 @@ public class LatestCriteria implements Searcher {
     }
 
     @Override
-    public Page<SummarizedRecipe> getRecipesByCriteria(Pageable pageable, List<String> ingredients, String name, List<Category> categories) {
+    public Page<SummarizedRecipe> getRecipesByTrend(Pageable pageable) {
         return recipeRepository.findAllByOrderByCreationDateDesc(pageable)
                 .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }

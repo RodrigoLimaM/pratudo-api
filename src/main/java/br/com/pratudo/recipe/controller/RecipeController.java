@@ -1,14 +1,15 @@
 package br.com.pratudo.recipe.controller;
 
+import br.com.pratudo.recipe.model.KeyValue;
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.UnitOfMeasureValues;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.enums.Category;
-import br.com.pratudo.recipe.model.enums.Criteria;
+import br.com.pratudo.recipe.model.enums.Trend;
+import br.com.pratudo.recipe.model.enums.Difficulty;
 import br.com.pratudo.recipe.model.enums.UnitOfMeasure;
 import br.com.pratudo.recipe.service.RecipeService;
-import br.com.pratudo.recipe.model.KeyValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,24 +44,31 @@ public class RecipeController {
                 .body(recipe);
     }
 
-    @GetMapping
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByCriteria(Pageable pageable,
-                                                                       @RequestParam Criteria criteria,
-                                                                       @RequestParam(required = false, defaultValue = "") List<String> ingredients,
-                                                                       @RequestParam(required = false, defaultValue = "") String name,
-                                                                       @RequestParam(required = false, defaultValue = "") List<Category> categories) {
+    @GetMapping("/trend")
+    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByTrend(Pageable pageable, @RequestParam Trend trend) {
         return ResponseEntity
-                .ok(recipeService.getRecipesByCriteria(pageable, criteria, ingredients, name, categories));
+                .ok(recipeService.getRecipesByTrend(pageable, trend));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByQuery(Pageable pageable,
+                                                                    @RequestParam(required = false) List<Category> categories,
+                                                                    @RequestParam(required = false) List<Difficulty> difficulties,
+                                                                    @RequestParam(required = false) Long serves,
+                                                                    @RequestParam(required = false) String name,
+                                                                    @RequestParam(required = false) List<String> ingredients) {
+        return ResponseEntity
+                .ok(recipeService.getRecipesByQuery(pageable, categories, difficulties, serves, name, ingredients));
     }
 
     @GetMapping("/criterias")
     public ResponseEntity<List<KeyValue>> getCriterias() {
         List<KeyValue> keyValues = new ArrayList<>();
 
-        Arrays.stream(Criteria.values()).filter(Criteria::isTab)
-                .forEach(criteria -> keyValues.add(KeyValue.builder()
-                        .key(criteria.name())
-                        .value(criteria.getDescription())
+        Arrays.stream(Trend.values())
+                .forEach(trend -> keyValues.add(KeyValue.builder()
+                        .key(trend.name())
+                        .value(trend.getDescription())
                         .build())
                 );
 

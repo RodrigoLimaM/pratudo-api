@@ -3,11 +3,12 @@ package br.com.pratudo.recipe.controller;
 import br.com.pratudo.recipe.model.KeyValue;
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
+import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
 import br.com.pratudo.recipe.model.UnitOfMeasureValues;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.enums.Category;
-import br.com.pratudo.recipe.model.enums.Trend;
 import br.com.pratudo.recipe.model.enums.Difficulty;
+import br.com.pratudo.recipe.model.enums.Trend;
 import br.com.pratudo.recipe.model.enums.UnitOfMeasure;
 import br.com.pratudo.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,12 +52,12 @@ public class RecipeController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<SummarizedRecipe>> getRecipesByQuery(Pageable pageable,
-                                                                    @RequestParam(required = false) List<Category> categories,
-                                                                    @RequestParam(required = false) List<Difficulty> difficulties,
-                                                                    @RequestParam(required = false) Long serves,
-                                                                    @RequestParam(required = false) String name,
-                                                                    @RequestParam(required = false) List<String> ingredients) {
+    public ResponseEntity<Page<SummarizedRecipeWithIngredients>> getRecipesByQuery(Pageable pageable,
+                                                                                   @RequestParam(required = false) List<Category> categories,
+                                                                                   @RequestParam(required = false) List<Difficulty> difficulties,
+                                                                                   @RequestParam(required = false) Long serves,
+                                                                                   @RequestParam(required = false) String name,
+                                                                                   @RequestParam(required = false) List<String> ingredients) {
         return ResponseEntity
                 .ok(recipeService.getRecipesByQuery(pageable, categories, difficulties, serves, name, ingredients));
     }

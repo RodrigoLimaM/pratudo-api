@@ -1,6 +1,6 @@
 package br.com.pratudo.recipe.service;
 
-import br.com.pratudo.recipe.model.enums.Criteria;
+import br.com.pratudo.recipe.model.enums.Trend;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.utils.StringUtils;
@@ -13,22 +13,18 @@ import java.util.Map;
 @Component
 public class SearcherByCriteriaFactory {
 
-    private static final Map<Criteria, Searcher> CRITERIA_BY_SEARCHER_MAP = new EnumMap<>(Criteria.class);
+    private static final Map<Trend, Searcher> CRITERIA_BY_SEARCHER_MAP = new EnumMap<>(Trend.class);
 
     @Autowired
     public SearcherByCriteriaFactory(RecipeRepository recipeRepository,
                                      RecipeMapper recipeMapper,
                                      StringUtils stringUtils,
                                      AnalyzerService analyzerService) {
-        CRITERIA_BY_SEARCHER_MAP.put(Criteria.LATEST, new LatestCriteria(recipeRepository, recipeMapper));
-        CRITERIA_BY_SEARCHER_MAP.put(Criteria.BY_INGREDIENTS, new ByIngredientsCriteria(recipeRepository, recipeMapper, stringUtils, analyzerService));
-        CRITERIA_BY_SEARCHER_MAP.put(Criteria.BY_NAME, new ByNameCriteria(recipeRepository, recipeMapper));
-        CRITERIA_BY_SEARCHER_MAP.put(Criteria.BY_CATEGORIES, new ByCategories(recipeRepository, recipeMapper));
-
+        CRITERIA_BY_SEARCHER_MAP.put(Trend.LATEST, new LatestCriteria(recipeRepository, recipeMapper));
     }
 
-    public Searcher getUserIdByTypeInstance(Criteria criteria) {
-        return CRITERIA_BY_SEARCHER_MAP.get(criteria);
+    public Searcher getUserIdByTypeInstance(Trend trend) {
+        return CRITERIA_BY_SEARCHER_MAP.get(trend);
     }
 
 }

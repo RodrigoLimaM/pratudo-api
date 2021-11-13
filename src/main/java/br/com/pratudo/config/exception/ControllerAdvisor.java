@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
@@ -60,5 +61,15 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         }
 
         return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    @ExceptionHandler(RecipeNotFoundException.class)
+    public ResponseEntity<Object> handleRecipeNotFoundExeption() {
+        ErrorResponse errorResponse = new ErrorResponse(
+                NOT_FOUND.value(),
+                "Receita não encontrada"
+        );
+
+        return ResponseEntity.status(NOT_FOUND).body(errorResponse);
     }
 }

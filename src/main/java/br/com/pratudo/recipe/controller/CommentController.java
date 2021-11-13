@@ -1,7 +1,7 @@
 package br.com.pratudo.recipe.controller;
 
 import br.com.pratudo.recipe.model.Comment;
-import br.com.pratudo.recipe.model.dto.CommentDTO;
+import br.com.pratudo.recipe.model.dto.ContentDTO;
 import br.com.pratudo.recipe.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +25,22 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping("/{recipeId}")
-    public ResponseEntity<List<Comment>> createComment(@PathVariable final String recipeId, @Valid @RequestBody final CommentDTO commentDTO) throws URISyntaxException {
+    public ResponseEntity<List<Comment>> createComment(@PathVariable final String recipeId, @Valid @RequestBody final ContentDTO contentDTO) throws URISyntaxException {
         String newCommentId = UUID.randomUUID().toString();
-        final List<Comment> comments = commentService.createComment(recipeId, commentDTO, newCommentId);
+        final List<Comment> comments = commentService.createComment(recipeId, contentDTO, newCommentId);
+
         return ResponseEntity
                 .created(new URI("/comment/" +recipeId +"/" +newCommentId))
                 .body(comments);
     }
+
+    @PostMapping("/{recipeId}/{commentId}")
+    public ResponseEntity<Comment> createReply(@PathVariable final String recipeId, @PathVariable final String commentId, @Valid @RequestBody final ContentDTO contentDTO) throws URISyntaxException {
+        String newReplyId = UUID.randomUUID().toString();
+        final Comment comment = commentService.createReply(recipeId, commentId, contentDTO, newReplyId);
+
+        return ResponseEntity
+                .created(new URI("/comment/" +recipeId +"/" +commentId +"/" +newReplyId))
+                .body(comment);    }
 
 }

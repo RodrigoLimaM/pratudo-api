@@ -6,17 +6,19 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Category {
-    SNACK("Lanche"),
-    ITALIAN("Italiana"),
-    ARABIC("Árabe"),
-    BRAZILIAN("Brasileira"),
-    JAPANESE("Japonesa"),
-    CHINESE("Chinesa"),
-    VEGETARIAN("Vegetariano"),
-    DRINKS("Bebidas"),
-    CANDIES("Doces"),
-    OTHERS("Outros")
+    SNACKS("Lanches", "/images/snacks.txt"),
+    ITALIANS("Italianas", "/images/italians.txt"),
+    ARABS("Árabes", "/images/arabics.txt"),
+    BRAZILIANS("Brasileiras", "/images/brazilians.txt"),
+    JAPANESES("Japonesas", "/images/japaneses.txt"),
+    CHINESE("Chinesas", "/images/chinese.txt"),
+    VEGETARIANS("Vegetarianas", "/images/vegetarians.txt"),
+    DRINKS("Bebidas", "/images/drinks.txt"),
+    DESSERTS("Sobremesas", "/images/desserts.txt"),
+    OTHERS("Outros", "/images/others.txt")
     ;
 
     private String description;
+
+    private String imageFilePath;
 }

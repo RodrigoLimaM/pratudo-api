@@ -32,6 +32,8 @@ public class RecipeDTO {
     @NotNull
     private Difficulty difficulty;
 
+    private Integer serves;
+
     private LocalDateTime creationDate;
 
     @NotNull

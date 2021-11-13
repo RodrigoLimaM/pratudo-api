@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class SummarizedRecipe {
 
     private String name;
 
+    @ToString.Exclude
     private List<String> images;
 
     private Owner owner;

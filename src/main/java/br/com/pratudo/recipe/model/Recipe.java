@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -32,6 +33,7 @@ public class Recipe {
     private String name;
 
     @Field(name = "images")
+    @ToString.Exclude
     private List<String> images;
 
     @Field(name = "owner")

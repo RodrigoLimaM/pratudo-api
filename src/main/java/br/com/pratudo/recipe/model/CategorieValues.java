@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class KeyValue {
+public class CategorieValues {
 
     private String key;
 
     private String value;
+
+    private String image;
 }

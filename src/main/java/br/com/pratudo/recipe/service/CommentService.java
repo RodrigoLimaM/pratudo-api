@@ -53,7 +53,9 @@ public class CommentService {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(RecipeNotFoundException::new);
 
-        List<Reply> replies = recipe.getComments().stream().filter(comm -> comm.getId().equals(commentId))
+        List<Reply> replies = recipe.getComments()
+                .stream()
+                .filter(comm -> comm.getId().equals(commentId))
                 .findFirst()
                 .map(Comment::getReplies)
                 .orElse(null);

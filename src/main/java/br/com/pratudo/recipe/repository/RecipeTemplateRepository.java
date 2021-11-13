@@ -67,7 +67,7 @@ public class RecipeTemplateRepository {
     }
 
     @SneakyThrows
-    public Recipe updateRecipe(Recipe newRecipe) {
+    public Recipe addComment(Recipe newRecipe) {
 
         String _id = newRecipe.get_id();
 

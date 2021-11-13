@@ -38,6 +38,6 @@ public class CommentService {
                 .replies(Collections.emptyList())
                 .build());
 
-        return recipeTemplateRepository.updateRecipe(recipe).getComments();
+        return recipeTemplateRepository.addComment(recipe).getComments();
     }
 }

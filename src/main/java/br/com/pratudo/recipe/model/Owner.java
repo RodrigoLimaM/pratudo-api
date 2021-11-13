@@ -12,8 +12,8 @@ import org.springframework.data.elasticsearch.annotations.Field;
 @Builder
 public class Owner {
 
-    @Field(name = "_id")
-    private String _id;
+    @Field(name = "id")
+    private String id;
 
     @Field(name = "name")
     private String name;

@@ -29,6 +29,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,7 +70,7 @@ public class RecipeService {
     public Recipe createRecipe(final RecipeDTO recipeDTO) {
         recipeDTO.setOwner(buildInitialOwner());
 
-        recipeDTO.setCreationDate(LocalDateTime.now());
+        recipeDTO.setCreationDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
 
         recipeDTO.setRatings(Collections.emptyList());
 
@@ -80,7 +81,7 @@ public class RecipeService {
 
     private Owner buildInitialOwner() {
         return Owner.builder()
-                ._id(securityUtils.getCurrent_Id())
+                .id(securityUtils.getCurrent_Id())
                 .name(securityUtils.getCurrentName())
                 .build();
     }

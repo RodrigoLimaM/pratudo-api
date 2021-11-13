@@ -2,6 +2,7 @@ package br.com.pratudo.recipe.model;
 
 import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.model.enums.Difficulty;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 public class Recipe {
 
     @Id
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String _id;
 
     @Field(name = "name")
@@ -45,7 +47,7 @@ public class Recipe {
     @Field(name = "serves")
     private Integer serves;
 
-    @Field(type = FieldType.Date, name = "creationDate", format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @Field(type = FieldType.Date, name = "creationDate", format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime creationDate;
 
     @JsonProperty("isNew")

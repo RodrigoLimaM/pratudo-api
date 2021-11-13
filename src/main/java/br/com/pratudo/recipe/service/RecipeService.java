@@ -19,10 +19,9 @@ import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.recipe.repository.RecipeTemplateRepository;
 import br.com.pratudo.utils.SecurityUtils;
 import br.com.pratudo.utils.StringUtils;
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
+import lombok.SneakyThrows;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -155,20 +154,19 @@ public class RecipeService {
         List<CategorieValues> categoriesValues = new ArrayList<>();
 
          Arrays.stream(Category.values())
-                 .forEach(category -> {
-                             try {
-                                 categoriesValues.add(CategorieValues.builder()
-                                         .key(category.name())
-                                        .value(category.getDescription())
-                                        .image(Files.asCharSource(new ClassPathResource(category.getImageFilePath()).getFile(), Charsets.UTF_8).readFirstLine())
-                                        .build());
-                             } catch (IOException e) {
-                                 e.printStackTrace();
-                             }
-                         }
+                 .forEach(category -> categoriesValues.add(CategorieValues.builder()
+                         .key(category.name())
+                         .value(category.getDescription())
+                         .image(getCategoryImageFilePath(category.getImageFilePath()))
+                         .build())
                  );
 
          return categoriesValues;
+    }
+
+    @SneakyThrows
+    private String getCategoryImageFilePath(String imageFilePath) {
+        return IOUtils.toString(RecipeService.class.getResourceAsStream(imageFilePath));
     }
 
     public List<UnitOfMeasureValues> getUnitsOfMeasure() {

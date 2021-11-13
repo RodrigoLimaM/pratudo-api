@@ -1,6 +1,6 @@
 package br.com.pratudo.recipe.controller;
 
-import br.com.pratudo.recipe.model.KeyValue;
+import br.com.pratudo.recipe.model.CategorieValues;
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
@@ -9,7 +9,6 @@ import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.model.enums.Difficulty;
 import br.com.pratudo.recipe.model.enums.Trend;
-import br.com.pratudo.recipe.model.enums.UnitOfMeasure;
 import br.com.pratudo.recipe.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -63,51 +62,31 @@ public class RecipeController {
     }
 
     @GetMapping("/trends")
-    public ResponseEntity<List<KeyValue>> getCriterias() {
-        List<KeyValue> keyValues = new ArrayList<>();
+    public ResponseEntity<List<CategorieValues>> getTrends() {
+        List<CategorieValues> categorieValues = new ArrayList<>();
 
         Arrays.stream(Trend.values())
-                .forEach(trend -> keyValues.add(KeyValue.builder()
+                .forEach(trend -> categorieValues.add(CategorieValues.builder()
                         .key(trend.name())
                         .value(trend.getDescription())
                         .build())
                 );
 
         return ResponseEntity
-                .ok(keyValues);
+                .ok(categorieValues);
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<List<KeyValue>> getCategories() {
-        List<KeyValue> keyValues = new ArrayList<>();
-
-        Arrays.stream(Category.values())
-                .forEach(category -> keyValues.add(KeyValue.builder()
-                        .key(category.name())
-                        .value(category.getDescription())
-                        .build())
-                );
+    public ResponseEntity<List<CategorieValues>> getCategories() {
 
         return ResponseEntity
-                .ok(keyValues);
+                .ok(recipeService.getCategories());
     }
 
     @GetMapping("/units-of-measure")
     public ResponseEntity<List<UnitOfMeasureValues>> getUnitsOfMeasure() {
-        List<UnitOfMeasureValues> unitOfMeasureValues = new ArrayList<>();
-
-        Arrays.stream(UnitOfMeasure.values())
-                .forEach(unitOfMeasure -> unitOfMeasureValues.add(
-                        UnitOfMeasureValues.builder()
-                                .key(unitOfMeasure.name())
-                                .translate(unitOfMeasure.getTranslation())
-                                .abbreviation(unitOfMeasure.getAbbreviation())
-                                .build()
-                        )
-                );
-
-        return ResponseEntity
-                .ok(unitOfMeasureValues);
+                return ResponseEntity
+                .ok(recipeService.getUnitsOfMeasure());
     }
 
     @GetMapping("/{_id}")

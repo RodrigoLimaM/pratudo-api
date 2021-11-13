@@ -1,22 +1,28 @@
 package br.com.pratudo.recipe.service;
 
 import br.com.pratudo.config.exception.CouldNotAnalyzeException;
+import br.com.pratudo.recipe.model.CategorieValues;
 import br.com.pratudo.recipe.model.Ingredient;
 import br.com.pratudo.recipe.model.IngredientItem;
 import br.com.pratudo.recipe.model.Owner;
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
+import br.com.pratudo.recipe.model.UnitOfMeasureValues;
 import br.com.pratudo.recipe.model.dto.RecipeDTO;
 import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.model.enums.Difficulty;
 import br.com.pratudo.recipe.model.enums.Trend;
+import br.com.pratudo.recipe.model.enums.UnitOfMeasure;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.recipe.repository.RecipeTemplateRepository;
 import br.com.pratudo.utils.SecurityUtils;
 import br.com.pratudo.utils.StringUtils;
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +31,7 @@ import org.springframework.util.CollectionUtils;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -142,5 +149,41 @@ public class RecipeService {
             ingredientList = "Ingredientes: " + stringUtils.convertListToStringSeparatedWithCommas(result) + ".";
         }
         return ingredientList;
+    }
+
+    public List<CategorieValues> getCategories() {
+        List<CategorieValues> categoriesValues = new ArrayList<>();
+
+         Arrays.stream(Category.values())
+                 .forEach(category -> {
+                             try {
+                                 categoriesValues.add(CategorieValues.builder()
+                                         .key(category.name())
+                                        .value(category.getDescription())
+                                        .image(Files.asCharSource(new ClassPathResource(category.getImageFilePath()).getFile(), Charsets.UTF_8).readFirstLine())
+                                        .build());
+                             } catch (IOException e) {
+                                 e.printStackTrace();
+                             }
+                         }
+                 );
+
+         return categoriesValues;
+    }
+
+    public List<UnitOfMeasureValues> getUnitsOfMeasure() {
+        List<UnitOfMeasureValues> unitOfMeasureValues = new ArrayList<>();
+
+        Arrays.stream(UnitOfMeasure.values())
+                .forEach(unitOfMeasure -> unitOfMeasureValues.add(
+                                UnitOfMeasureValues.builder()
+                                        .key(unitOfMeasure.name())
+                                        .translate(unitOfMeasure.getTranslation())
+                                        .abbreviation(unitOfMeasure.getAbbreviation())
+                                        .build()
+                        )
+                );
+
+        return unitOfMeasureValues;
     }
 }

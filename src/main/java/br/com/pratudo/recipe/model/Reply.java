@@ -1,6 +1,7 @@
 package br.com.pratudo.recipe.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -11,7 +12,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class Reply {
+
+    @Field(name = "id")
+    private String id;
 
     @Field(name = "owner")
     private String owner;
@@ -19,6 +24,6 @@ public class Reply {
     @Field(name = "content")
     private String content;
 
-    @Field(type = FieldType.Date, name = "creationDate", format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    @Field(type = FieldType.Date, name = "creationDate", format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime creationDate;
 }

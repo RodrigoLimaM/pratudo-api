@@ -21,6 +21,7 @@ import java.util.UUID;
 @RequestMapping("/comment")
 public class CommentController {
 
+    public static final String URI_PATH_SEPARATOR = "/";
     @Autowired
     CommentService commentService;
 
@@ -30,7 +31,7 @@ public class CommentController {
         final List<Comment> comments = commentService.createComment(recipeId, contentDTO, newCommentId);
 
         return ResponseEntity
-                .created(new URI("/comment/" +recipeId +"/" +newCommentId))
+                .created(new URI("/comment/" +recipeId +URI_PATH_SEPARATOR +newCommentId))
                 .body(comments);
     }
 
@@ -40,7 +41,7 @@ public class CommentController {
         final Comment comment = commentService.createReply(recipeId, commentId, contentDTO, newReplyId);
 
         return ResponseEntity
-                .created(new URI("/comment/" +recipeId +"/" +commentId +"/" +newReplyId))
+                .created(new URI("/comment/" +recipeId +URI_PATH_SEPARATOR +commentId +URI_PATH_SEPARATOR +newReplyId))
                 .body(comment);    }
 
 }

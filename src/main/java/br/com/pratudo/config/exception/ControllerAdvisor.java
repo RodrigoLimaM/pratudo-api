@@ -72,4 +72,14 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
         return ResponseEntity.status(NOT_FOUND).body(errorResponse);
     }
+
+    @ExceptionHandler(UserNotAllowedException.class)
+    public ResponseEntity<Object> handleUserNotAllowedException() {
+        ErrorResponse errorResponse = new ErrorResponse(
+                BAD_REQUEST.value(),
+                "Usuário não permitido"
+        );
+
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
 }

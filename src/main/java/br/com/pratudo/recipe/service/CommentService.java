@@ -36,7 +36,8 @@ public class CommentService {
 
         comments.add(buildComment(contentDTO, newCommentId));
 
-        return recipeTemplateRepository.updateRecipe(recipe).getComments();
+        return recipeTemplateRepository.updateRecipe(recipe)
+                .getComments();
     }
 
     private Comment buildComment(ContentDTO contentDTO, String newCommentId) {

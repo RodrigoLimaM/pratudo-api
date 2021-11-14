@@ -33,7 +33,7 @@ public class RatingService {
 
         List<Rating> ratings = recipe.getRatings();
 
-        if(IsUserNotAllowed(recipe, current_id, ratings))
+        if(!IsUserAllowedToRate(recipe, current_id))
             throw new UserNotAllowedException();
 
         ratings.add(Rating.builder()
@@ -46,15 +46,15 @@ public class RatingService {
                 .getRatings();
     }
 
-    private boolean IsUserNotAllowed(Recipe recipe, String current_id, List<Rating> ratings) {
-        return isRequesterSameAsOwner(recipe, current_id) || hasAlreadyRated(current_id, ratings);
-    }
-
-    private boolean hasAlreadyRated(String current_id, List<Rating> ratings) {
-        return ratings.stream().anyMatch(rating -> rating.getOwner().equals(current_id));
+    boolean IsUserAllowedToRate(Recipe recipe, String current_id) {
+        return !isRequesterSameAsOwner(recipe, current_id) && !hasAlreadyRated(recipe, current_id);
     }
 
     private boolean isRequesterSameAsOwner(Recipe recipe, String current_id) {
         return current_id.equals(recipe.getOwner().getId());
+    }
+
+    private boolean hasAlreadyRated(Recipe recipe, String current_id) {
+        return recipe.getRatings().stream().anyMatch(rating -> rating.getOwner().equals(current_id));
     }
 }

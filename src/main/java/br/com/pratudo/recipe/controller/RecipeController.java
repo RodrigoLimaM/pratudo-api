@@ -95,7 +95,7 @@ public class RecipeController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/myRecipes")
+    @GetMapping("/my-recipes")
     public ResponseEntity<Page<SummarizedRecipe>> getMyRecipes(Pageable pageable) {
         return ResponseEntity
                 .ok(recipeService.getMyRecipes(pageable));

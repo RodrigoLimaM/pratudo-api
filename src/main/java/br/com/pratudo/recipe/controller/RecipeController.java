@@ -78,14 +78,13 @@ public class RecipeController {
 
     @GetMapping("/categories")
     public ResponseEntity<List<CategorieValues>> getCategories() {
-
         return ResponseEntity
                 .ok(recipeService.getCategories());
     }
 
     @GetMapping("/units-of-measure")
     public ResponseEntity<List<UnitOfMeasureValues>> getUnitsOfMeasure() {
-                return ResponseEntity
+        return ResponseEntity
                 .ok(recipeService.getUnitsOfMeasure());
     }
 
@@ -94,6 +93,12 @@ public class RecipeController {
         return recipeService.getRecipeById(_id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/myRecipes")
+    public ResponseEntity<Page<SummarizedRecipe>> getMyRecipes(Pageable pageable) {
+        return ResponseEntity
+                .ok(recipeService.getMyRecipes(pageable));
     }
 
 }

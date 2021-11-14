@@ -189,4 +189,9 @@ public class RecipeService {
 
         return unitOfMeasureValues;
     }
+
+    public Page<SummarizedRecipe> getMyRecipes(Pageable pageable) {
+        return recipeRepository.findByOwner_Id(securityUtils.getCurrent_Id(), pageable)
+                .map(recipeMapper::convertRecipeToSummarizedRecipe);
+    }
 }

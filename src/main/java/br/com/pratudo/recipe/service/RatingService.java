@@ -33,7 +33,7 @@ public class RatingService {
 
         List<Rating> ratings = recipe.getRatings();
 
-        if(isRequesterSameAsOwner(recipe, current_id) || hasAlreadyRated(current_id, ratings))
+        if(IsUserNotAllowed(recipe, current_id, ratings))
             throw new UserNotAllowedException();
 
         ratings.add(Rating.builder()
@@ -44,6 +44,10 @@ public class RatingService {
 
         return recipeTemplateRepository.updateRecipe(recipe)
                 .getRatings();
+    }
+
+    private boolean IsUserNotAllowed(Recipe recipe, String current_id, List<Rating> ratings) {
+        return isRequesterSameAsOwner(recipe, current_id) || hasAlreadyRated(current_id, ratings);
     }
 
     private boolean hasAlreadyRated(String current_id, List<Rating> ratings) {

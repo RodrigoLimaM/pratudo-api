@@ -22,6 +22,7 @@ import java.util.UUID;
 public class CommentController {
 
     public static final String URI_PATH_SEPARATOR = "/";
+
     @Autowired
     CommentService commentService;
 

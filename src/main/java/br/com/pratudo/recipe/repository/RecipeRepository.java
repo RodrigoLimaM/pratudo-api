@@ -19,4 +19,6 @@ public interface RecipeRepository extends ElasticsearchRepository<Recipe, String
     Page<Recipe> findByIngredients(String ingredients, Pageable pageable);
 
     Page<Recipe>findByCategoriesIn(List<Category> categories , Pageable pageable);
+
+    Page<Recipe> findByOwner_Id(String id, Pageable pageable);
 }

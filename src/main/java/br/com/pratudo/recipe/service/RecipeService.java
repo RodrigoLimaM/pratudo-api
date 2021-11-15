@@ -63,6 +63,9 @@ public class RecipeService {
     @Autowired
     SearcherByCriteriaFactory searcherByCriteriaFactory;
 
+    @Autowired
+    RatingService ratingService;
+
     private static final String INGREDIENT_MARKER = "*";
 
     private static final Integer FORMATTED_INGREDIENTS_ITEMS_SIZE = 10;
@@ -87,7 +90,8 @@ public class RecipeService {
     }
 
     public Optional<Recipe> getRecipeById(String _id) {
-        return recipeRepository.findById(_id);
+        Optional<Recipe> recipe = recipeRepository.findById(_id);
+        return recipe.map(rec -> rec.buildRecipeWithIsUserAllowedToRate(ratingService.IsUserAllowedToRate(rec, securityUtils.getCurrent_Id())));
     }
 
     public Page<SummarizedRecipe> getRecipesByTrend(Pageable pageable, Trend trend) {
@@ -184,5 +188,10 @@ public class RecipeService {
                 );
 
         return unitOfMeasureValues;
+    }
+
+    public Page<SummarizedRecipe> getMyRecipes(Pageable pageable) {
+        return recipeRepository.findByOwner_Id(securityUtils.getCurrent_Id(), pageable)
+                .map(recipeMapper::convertRecipeToSummarizedRecipe);
     }
 }

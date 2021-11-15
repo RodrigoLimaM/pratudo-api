@@ -66,6 +66,14 @@ public class Recipe {
     @Field(name = "ratings")
     private List<Rating> ratings;
 
+    private Boolean isUserAllowedToRate;
+
+    public Recipe buildRecipeWithIsUserAllowedToRate(boolean isUserAllowedToRate) {
+        this.isUserAllowedToRate = isUserAllowedToRate;
+
+        return this;
+    }
+
     @Field(name = "ingredients")
     private List<Ingredient> ingredients;
 

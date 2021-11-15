@@ -41,7 +41,7 @@ public class UserService {
 
         final User user = userRepository.findUserByEmail(email);
 
-        if(user != null) {
+        if (user != null) {
             throw new UserAlreadyExistsException();
         }
 

@@ -42,19 +42,19 @@ public class RecipeTemplateRepository {
     public Page<Recipe> getRecipeByQuery(Pageable pageable, List<Category> categories, List<Difficulty> difficulties, Long serves, String name, List<String> ingredients) {
         Criteria criteria = new Criteria();
 
-        if(!Objects.isNull(categories))
+        if (!Objects.isNull(categories))
             criteria = criteria.and("categories").in(categories);
 
-        if(!Objects.isNull(difficulties))
+        if (!Objects.isNull(difficulties))
             criteria = criteria.and("difficulty").in(difficulties);
 
-        if(!Objects.isNull(serves))
+        if (!Objects.isNull(serves))
             criteria = criteria.and("serves").is(serves);
 
-        if(!Objects.isNull(name))
+        if (!Objects.isNull(name))
             criteria = criteria.and("name").is(name);
 
-        if(!Objects.isNull(ingredients))
+        if (!Objects.isNull(ingredients))
             criteria = criteria.and("ingredients.items.name").in(ingredients);
 
         CriteriaQuery criteriaQuery = new CriteriaQuery(criteria);

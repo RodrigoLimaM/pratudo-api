@@ -33,7 +33,7 @@ public class RatingService {
 
         List<Rating> ratings = recipe.getRatings();
 
-        if(!IsUserAllowedToRate(recipe, current_id))
+        if (!IsUserAllowedToRate(recipe, current_id))
             throw new UserNotAllowedException();
 
         ratings.add(Rating.builder()

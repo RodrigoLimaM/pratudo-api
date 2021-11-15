@@ -41,10 +41,6 @@ public class UserService {
 
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    public Optional<User> getUserBy_Id(final String _id) {
-        return userRepository.findById(_id);
-    }
-
     public User createUser(final UserDTO userDTO) {
         String email = userDTO.getEmail();
 
@@ -56,6 +52,8 @@ public class UserService {
 
         userDTO.setPerformance(buildInitialPerformance());
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+
+        System.out.println(userMapper.convertUserDTOToUser(userDTO));
 
         return userRepository.save(userMapper.convertUserDTOToUser(userDTO));
     }

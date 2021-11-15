@@ -29,8 +29,6 @@ public class UserTemplateRepository {
 
         newUser.set_id(null);
 
-        System.out.println("************\n" +objectMapper.writeValueAsString(newUser));
-
         UpdateQuery updateQuery = UpdateQuery.builder(_id)
                 .withDocument(Document.parse(objectMapper.writeValueAsString(newUser)))
                 .build();

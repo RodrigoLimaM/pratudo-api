@@ -3,7 +3,7 @@ package br.com.pratudo.recipe.service;
 import br.com.pratudo.recipe.model.enums.Trend;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
-import br.com.pratudo.utils.StringUtils;
+import br.com.pratudo.commons.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

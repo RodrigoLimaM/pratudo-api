@@ -9,9 +9,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class GamificationAlert {
+public class GamificationData {
 
     private Long gainedExperience;
 
     private String reason;
+
+    public static GamificationData of(Long gainedExperience, String reason) {
+        return GamificationData.builder()
+                .gainedExperience(gainedExperience)
+                .reason(reason)
+                .build();
+    }
 }

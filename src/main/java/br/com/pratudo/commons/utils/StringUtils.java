@@ -1,4 +1,4 @@
-package br.com.pratudo.utils;
+package br.com.pratudo.commons.utils;
 
 import org.springframework.stereotype.Component;
 

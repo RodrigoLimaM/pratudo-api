@@ -1,6 +1,7 @@
 package br.com.pratudo.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,7 @@ import java.util.Collections;
 public class User implements UserDetails {
 
     @Id
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String _id;
 
     @Field(name = "email")

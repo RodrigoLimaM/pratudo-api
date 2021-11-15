@@ -31,9 +31,6 @@ public class RecipeTemplateRepository {
     ElasticsearchRestTemplate elasticsearchRestTemplate;
 
     @Autowired
-    RecipeRepository recipeRepository;
-
-    @Autowired
     DocumentOperations documentOperations;
 
     @Autowired

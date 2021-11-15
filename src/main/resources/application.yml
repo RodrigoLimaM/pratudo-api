@@ -26,6 +26,7 @@ logbook:
     style: http
 
 gamification:
+  experienceToLevelUp: 1000
   createRecipe:
     gainedExperience: 500
     reason: Criar receita
@@ -34,4 +35,4 @@ gamification:
     reason: Avaliar receita
   createComment:
     gainedExperience: 250
-    reason: Avaliar receita
+    reason: Comentar receita

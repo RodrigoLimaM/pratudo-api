@@ -1,7 +1,10 @@
 package br.com.pratudo.recipe.service;
 
+import br.com.pratudo.commons.gamification.GamificationContext;
+import br.com.pratudo.commons.gamification.GamificationHandlerByCriteriaFactory;
 import br.com.pratudo.config.exception.CouldNotAnalyzeException;
 import br.com.pratudo.recipe.model.CategorieValues;
+import br.com.pratudo.recipe.model.GamificationData;
 import br.com.pratudo.recipe.model.Ingredient;
 import br.com.pratudo.recipe.model.IngredientItem;
 import br.com.pratudo.recipe.model.Owner;
@@ -17,8 +20,8 @@ import br.com.pratudo.recipe.model.enums.UnitOfMeasure;
 import br.com.pratudo.recipe.model.mapper.RecipeMapper;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.recipe.repository.RecipeTemplateRepository;
-import br.com.pratudo.utils.SecurityUtils;
-import br.com.pratudo.utils.StringUtils;
+import br.com.pratudo.commons.utils.SecurityUtils;
+import br.com.pratudo.commons.utils.StringUtils;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +68,9 @@ public class RecipeService {
 
     @Autowired
     RatingService ratingService;
+
+    @Autowired
+    GamificationHandlerByCriteriaFactory gamificationHandlerByCriteriaFactory;
 
     private static final String INGREDIENT_MARKER = "*";
 
@@ -193,5 +199,10 @@ public class RecipeService {
     public Page<SummarizedRecipe> getMyRecipes(Pageable pageable) {
         return recipeRepository.findByOwner_Id(securityUtils.getCurrent_Id(), pageable)
                 .map(recipeMapper::convertRecipeToSummarizedRecipe);
+    }
+
+    public GamificationData handleCreateRecipeGamification() {
+        return gamificationHandlerByCriteriaFactory.getUserIdByTypeInstance(GamificationContext.CREATE_RECIPE)
+                .handleGamification();
     }
 }

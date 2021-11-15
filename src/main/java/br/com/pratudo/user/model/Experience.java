@@ -20,12 +20,13 @@ public class Experience {
     private Long from;
 
     @JsonProperty
-    private Long getToNextLevel() {
+    public Long getToNextLevel() {
         return from - current;
     }
 
     @JsonProperty
-    private Long getPercentage() {
-        return (this.current / this.from) * 100;
+    public Long getPercentage() {
+        return Math.round((Double.valueOf(this.current) / Double.valueOf(this.from)) * 100);
     }
+
 }

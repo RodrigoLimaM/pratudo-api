@@ -1,4 +1,4 @@
-package br.com.pratudo.utils;
+package br.com.pratudo.commons.utils;
 
 import br.com.pratudo.user.model.User;
 import org.springframework.security.core.Authentication;

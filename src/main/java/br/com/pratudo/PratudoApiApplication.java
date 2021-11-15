@@ -1,6 +1,6 @@
 package br.com.pratudo;
 
-import br.com.pratudo.config.properties.ApplicationProperties;
+import br.com.pratudo.config.properties.GamificationProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -10,7 +10,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @SpringBootApplication
 @EnableFeignClients
 @EnableElasticsearchRepositories
-@EnableConfigurationProperties(ApplicationProperties.class)
+@EnableConfigurationProperties(GamificationProperties.class)
 public class PratudoApiApplication {
 
 	public static void main(String[] args) {

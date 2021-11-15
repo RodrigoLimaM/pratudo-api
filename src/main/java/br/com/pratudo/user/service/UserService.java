@@ -1,6 +1,9 @@
 package br.com.pratudo.user.service;
 
+import br.com.pratudo.commons.utils.SecurityUtils;
+import br.com.pratudo.config.exception.ResourceNotFoundException;
 import br.com.pratudo.config.exception.UserAlreadyExistsException;
+import br.com.pratudo.config.properties.GamificationProperties;
 import br.com.pratudo.user.model.Badges;
 import br.com.pratudo.user.model.Experience;
 import br.com.pratudo.user.model.Performance;
@@ -9,7 +12,7 @@ import br.com.pratudo.user.model.dto.UserDTO;
 import br.com.pratudo.user.model.enums.Title;
 import br.com.pratudo.user.model.mapper.UserMapper;
 import br.com.pratudo.user.repository.UserRepository;
-import br.com.pratudo.utils.SecurityUtils;
+import br.com.pratudo.user.repository.UserTemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,6 +32,12 @@ public class UserService {
 
     @Autowired
     SecurityUtils securityUtils;
+
+    @Autowired
+    UserTemplateRepository userTemplateRepository;
+
+    @Autowired
+    GamificationProperties gamificationProperties;
 
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -60,7 +69,7 @@ public class UserService {
                     .level(1L)
                     .experience(Experience.builder()
                             .current(0L)
-                            .from(1000L)
+                            .from(gamificationProperties.getExperienceToLevelUp())
                             .build())
                 .title(Title.INICIANTE)
                 .badges(Badges.builder()
@@ -72,5 +81,22 @@ public class UserService {
 
     public Performance getCurrentUserPerformance() {
         return userRepository.findById(securityUtils.getCurrent_Id()).map(User::getPerformance).orElse(null);
+    }
+
+    public void addExperience(Long gainedExperience) {
+        User user = userRepository.findById(securityUtils.getCurrent_Id())
+                .orElseThrow(ResourceNotFoundException::new);
+
+        Performance performance = user.getPerformance();
+        Experience experience = performance.getExperience();
+
+        if(gainedExperience >= experience.getToNextLevel()) {
+            experience.setCurrent(experience.getCurrent() - gainedExperience);
+            performance.setLevel(performance.getLevel() + 1);
+        } else {
+            experience.setCurrent(experience.getCurrent() + gainedExperience);
+        }
+
+        userTemplateRepository.updateUser(user);
     }
 }

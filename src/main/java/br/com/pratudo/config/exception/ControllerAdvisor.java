@@ -63,11 +63,11 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
-    @ExceptionHandler(RecipeNotFoundException.class)
-    public ResponseEntity<Object> handleRecipeNotFoundExeption() {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFoundExeption() {
         ErrorResponse errorResponse = new ErrorResponse(
                 NOT_FOUND.value(),
-                "Receita não encontrada"
+                "Recurso não encontrado"
         );
 
         return ResponseEntity.status(NOT_FOUND).body(errorResponse);

@@ -1,7 +1,6 @@
 package br.com.pratudo.recipe.controller;
 
-import br.com.pratudo.config.properties.ApplicationProperties;
-import br.com.pratudo.recipe.model.GamificationAlert;
+import br.com.pratudo.recipe.model.GamificationData;
 import br.com.pratudo.recipe.model.dto.RatingDTO;
 import br.com.pratudo.recipe.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +22,12 @@ public class RatingController {
     @Autowired
     RatingService ratingService;
 
-    @Autowired
-    ApplicationProperties applicationProperties;
-
     @PostMapping("/{recipeId}")
-    public ResponseEntity<GamificationAlert> createRate(@PathVariable final String recipeId, @RequestBody @Valid final RatingDTO ratingDTO) throws URISyntaxException {
+    public ResponseEntity<GamificationData> createRate(@PathVariable final String recipeId, @RequestBody @Valid final RatingDTO ratingDTO) throws URISyntaxException {
         ratingService.createRating(recipeId, ratingDTO);
 
         return ResponseEntity
                 .created(new URI("/rating/" +recipeId))
-                .body(applicationProperties.buildCreateRatingGamificationAlert());
+                .body(ratingService.handleCreateRateGamification());
     }
 }

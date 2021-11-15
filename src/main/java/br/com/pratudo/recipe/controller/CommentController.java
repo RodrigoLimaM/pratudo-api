@@ -1,6 +1,7 @@
 package br.com.pratudo.recipe.controller;
 
 import br.com.pratudo.recipe.model.Comment;
+import br.com.pratudo.recipe.model.GamificationData;
 import br.com.pratudo.recipe.model.dto.ContentDTO;
 import br.com.pratudo.recipe.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -27,13 +27,13 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping("/{recipeId}")
-    public ResponseEntity<List<Comment>> createComment(@PathVariable final String recipeId, @Valid @RequestBody final ContentDTO contentDTO) throws URISyntaxException {
+    public ResponseEntity<GamificationData> createComment(@PathVariable final String recipeId, @Valid @RequestBody final ContentDTO contentDTO) throws URISyntaxException {
         String newCommentId = UUID.randomUUID().toString();
-        final List<Comment> comments = commentService.createComment(recipeId, contentDTO, newCommentId);
+        commentService.createComment(recipeId, contentDTO, newCommentId);
 
         return ResponseEntity
                 .created(new URI("/comment/" +recipeId +URI_PATH_SEPARATOR +newCommentId))
-                .body(comments);
+                .body(commentService.handleCreateCommentGamification());
     }
 
     @PostMapping("/{recipeId}/{commentId}")

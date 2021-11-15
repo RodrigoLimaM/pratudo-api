@@ -1,6 +1,8 @@
 package br.com.pratudo.recipe.controller;
 
+import br.com.pratudo.config.properties.GamificationProperties;
 import br.com.pratudo.recipe.model.CategorieValues;
+import br.com.pratudo.recipe.model.GamificationData;
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
@@ -10,6 +12,7 @@ import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.model.enums.Difficulty;
 import br.com.pratudo.recipe.model.enums.Trend;
 import br.com.pratudo.recipe.service.RecipeService;
+import br.com.pratudo.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,12 +39,18 @@ public class RecipeController {
     @Autowired
     RecipeService recipeService;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    GamificationProperties gamificationProperties;
+
     @PostMapping
-    public ResponseEntity<Recipe> createRecipe(@Valid @RequestBody final RecipeDTO recipeDTO) throws URISyntaxException {
+    public ResponseEntity<GamificationData> createRecipe(@Valid @RequestBody final RecipeDTO recipeDTO) throws URISyntaxException {
         final Recipe recipe = recipeService.createRecipe(recipeDTO);
         return ResponseEntity
                 .created(new URI("/recipe/" +recipe.get_id()))
-                .body(recipe);
+                .body(recipeService.handleCreateRecipeGamification());
     }
 
     @GetMapping("/trend")

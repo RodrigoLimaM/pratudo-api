@@ -1,13 +1,16 @@
 package br.com.pratudo.recipe.service;
 
-import br.com.pratudo.config.exception.RecipeNotFoundException;
+import br.com.pratudo.commons.gamification.GamificationContext;
+import br.com.pratudo.commons.gamification.GamificationHandlerByCriteriaFactory;
+import br.com.pratudo.commons.utils.SecurityUtils;
+import br.com.pratudo.config.exception.ResourceNotFoundException;
 import br.com.pratudo.recipe.model.Comment;
+import br.com.pratudo.recipe.model.GamificationData;
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.Reply;
 import br.com.pratudo.recipe.model.dto.ContentDTO;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.recipe.repository.RecipeTemplateRepository;
-import br.com.pratudo.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +31,12 @@ public class CommentService {
     @Autowired
     SecurityUtils securityUtils;
 
+    @Autowired
+    GamificationHandlerByCriteriaFactory gamificationHandlerByCriteriaFactory;
+
     public List<Comment> createComment(String recipeId, final ContentDTO contentDTO, String newCommentId) {
         Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(RecipeNotFoundException::new);
+                .orElseThrow(ResourceNotFoundException::new);
 
         List<Comment> comments = recipe.getComments();
 
@@ -52,7 +58,7 @@ public class CommentService {
 
     public Comment createReply(String recipeId, String commentId, ContentDTO contentDTO, String newReplyId) {
         Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(RecipeNotFoundException::new);
+                .orElseThrow(ResourceNotFoundException::new);
 
         List<Reply> replies = recipe.getComments()
                 .stream()
@@ -78,5 +84,10 @@ public class CommentService {
                         .content(contentDTO.getContent())
                         .creationDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
+    }
+
+    public GamificationData handleCreateCommentGamification() {
+        return gamificationHandlerByCriteriaFactory.getUserIdByTypeInstance(GamificationContext.CREATE_COMMENT)
+                .handleGamification();
     }
 }

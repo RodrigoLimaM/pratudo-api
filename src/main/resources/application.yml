@@ -1,0 +1,38 @@
+server:
+  port: ${PORT:8080}
+
+# JWT
+pratudo:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: ${JWT_EXPIRATION}
+
+spring:
+  elasticsearch:
+    rest:
+      uris: ${BONSAI_URL}
+
+logging:
+  level:
+    tracer: TRACE
+    org:
+      zalando:
+      logbook: TRACE
+  charset:
+      console: windows-1252
+
+logbook:
+  format:
+    style: http
+
+gamification:
+  experienceToLevelUp: 1000
+  createRecipe:
+    gainedExperience: 500
+    reason: Criar receita
+  createRating:
+    gainedExperience: 250
+    reason: Avaliar receita
+  createComment:
+    gainedExperience: 250
+    reason: Comentar receita

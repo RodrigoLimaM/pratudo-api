@@ -7,7 +7,9 @@ import lombok.Getter;
 @Getter
 public enum Title {
     INICIANTE("Iniciante"),
-    CHEF("Chefe de cozinha"),
+    COZINHEIRO("Cozinheiro"),
+    SUBCHEFE("Subchefe"),
+    CHEFE_DE_COZINHA("Chefe de cozinha"),
     MESTRE_CUCA("Mestre cuca")
     ;
 

@@ -20,9 +20,6 @@ public class Performance {
     @Field(name = "experience")
     private Experience experience;
 
-    @Field(name = "title")
-    private Title title;
-
     @JsonProperty
     public String getTitle() {
         if (level < 5)

@@ -25,10 +25,14 @@ public class Performance {
 
     @JsonProperty
     public String getTitle() {
-        if (level < 10)
+        if (level < 5)
             return Title.INICIANTE.getDescription();
-        else if (level >= 10 && level < 20)
-            return Title.CHEF.getDescription();
+        else if (level >= 5 && level < 10)
+            return Title.COZINHEIRO.getDescription();
+        else if (level >= 10 && level < 15)
+            return Title.SUBCHEFE.getDescription();
+        else if (level >= 15 && level < 20)
+            return Title.CHEFE_DE_COZINHA.getDescription();
         else
             return Title.MESTRE_CUCA.getDescription();
     }

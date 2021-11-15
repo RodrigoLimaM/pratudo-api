@@ -1,6 +1,8 @@
 package br.com.pratudo.recipe.controller;
 
+import br.com.pratudo.config.properties.ApplicationProperties;
 import br.com.pratudo.recipe.model.CategorieValues;
+import br.com.pratudo.recipe.model.GamificationAlert;
 import br.com.pratudo.recipe.model.Recipe;
 import br.com.pratudo.recipe.model.SummarizedRecipe;
 import br.com.pratudo.recipe.model.SummarizedRecipeWithIngredients;
@@ -36,12 +38,15 @@ public class RecipeController {
     @Autowired
     RecipeService recipeService;
 
+    @Autowired
+    ApplicationProperties applicationProperties;
+
     @PostMapping
-    public ResponseEntity<Recipe> createRecipe(@Valid @RequestBody final RecipeDTO recipeDTO) throws URISyntaxException {
+    public ResponseEntity<GamificationAlert> createRecipe(@Valid @RequestBody final RecipeDTO recipeDTO) throws URISyntaxException {
         final Recipe recipe = recipeService.createRecipe(recipeDTO);
         return ResponseEntity
                 .created(new URI("/recipe/" +recipe.get_id()))
-                .body(recipe);
+                .body(applicationProperties.buildCreateRecipeGamificationAlert());
     }
 
     @GetMapping("/trend")

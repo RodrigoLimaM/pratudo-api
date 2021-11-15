@@ -7,9 +7,9 @@ import br.com.pratudo.config.properties.GamificationProperties;
 import br.com.pratudo.user.model.Badges;
 import br.com.pratudo.user.model.Experience;
 import br.com.pratudo.user.model.Performance;
+import br.com.pratudo.user.model.SummarizedUser;
 import br.com.pratudo.user.model.User;
 import br.com.pratudo.user.model.dto.UserDTO;
-import br.com.pratudo.user.model.enums.Title;
 import br.com.pratudo.user.model.mapper.UserMapper;
 import br.com.pratudo.user.repository.UserRepository;
 import br.com.pratudo.user.repository.UserTemplateRepository;
@@ -71,7 +71,6 @@ public class UserService {
                             .current(0L)
                             .from(gamificationProperties.getExperienceToLevelUp())
                             .build())
-                .title(Title.INICIANTE)
                 .badges(Badges.builder()
                         .owned(Collections.emptyList())
                         .possibleBadges(10L)
@@ -98,5 +97,10 @@ public class UserService {
         }
 
         userTemplateRepository.updateUser(user);
+    }
+
+    public Optional<SummarizedUser> getCurrentUserSummarizedData() {
+        return userRepository.findById(securityUtils.getCurrent_Id())
+                .map(userMapper::convertUserToSummarizedUser);
     }
 }

@@ -18,7 +18,6 @@ public class MethodOfPreparationItem {
     private String description;
 
     @Valid
-    @NotNull
     @Field(name = "time")
     private Time time;
 }

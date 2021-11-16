@@ -21,6 +21,11 @@ public class Step {
     private String step;
 
     @Valid
+    @NotNull
+    @Field(name = "time")
+    private Time time;
+
+    @Valid
     @NotEmpty
     @JsonProperty("items")
     @Field(name = "items")

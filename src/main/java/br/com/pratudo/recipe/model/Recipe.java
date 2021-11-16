@@ -111,13 +111,8 @@ public class Recipe {
         return Time.builder()
                 .value(
                         methodOfPreparation.getSteps().stream()
-                                .map(
-                                        step -> step.getMethodOfPreparationItem()
-                                                .stream()
-                                                .map(MethodOfPreparationItem::getTime)
-                                                .map(stepTime -> stepTime.getTimeUnit().toMinutes(stepTime.getValue()))
-                                                .reduce(0L, Long::sum)
-                                )
+                                .map(Step::getTime)
+                                .map(stepTime -> stepTime.getTimeUnit().toMinutes(stepTime.getValue()))
                                 .reduce(0L, Long::sum)
                 )
                 .timeUnit(TimeUnit.MINUTES)

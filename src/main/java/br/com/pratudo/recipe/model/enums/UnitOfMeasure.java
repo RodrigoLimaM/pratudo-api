@@ -17,7 +17,8 @@ public enum UnitOfMeasure {
     PINCH("Pitada", "pit"),
     UNIT("Unidade", "uni"),
     PACKAGE("Pacote", "pc"),
-    MILLILITER("Litro", "l"),
+    LITER("Litro", "l"),
+    MILLILITER("Mililitro", "ml"),
     KILOGRAM("Kilograma", "kg"),
     GRAM("Grama", "g")
     ;

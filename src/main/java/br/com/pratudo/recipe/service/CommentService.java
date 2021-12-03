@@ -49,7 +49,7 @@ public class CommentService {
     private Comment buildComment(ContentDTO contentDTO, String newCommentId) {
         return Comment.builder()
                 .id(newCommentId)
-                .owner(securityUtils.getCurrent_Id())
+                .owner(securityUtils.getCurrentName())
                 .content(contentDTO.getContent())
                 .creationDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .replies(Collections.emptyList())
@@ -80,7 +80,7 @@ public class CommentService {
     private Reply buildReply(ContentDTO contentDTO, String newReplyId) {
         return Reply.builder()
                         .id(newReplyId)
-                        .owner(securityUtils.getCurrent_Id())
+                        .owner(securityUtils.getCurrentName())
                         .content(contentDTO.getContent())
                         .creationDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
@@ -89,5 +89,11 @@ public class CommentService {
     public GamificationData handleCreateCommentGamification() {
         return gamificationHandlerByCriteriaFactory.getUserIdByTypeInstance(GamificationContext.CREATE_COMMENT)
                 .handleGamification();
+    }
+
+    public List<Comment> getRecipeComments(String recipeId) {
+        return recipeRepository.findById(recipeId)
+                .map(Recipe::getComments)
+                .orElse(Collections.emptyList());
     }
 }

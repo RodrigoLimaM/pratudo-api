@@ -97,7 +97,9 @@ public class RecipeService {
 
     public Optional<Recipe> getRecipeById(String _id) {
         Optional<Recipe> recipe = recipeRepository.findById(_id);
-        return recipe.map(rec -> rec.buildRecipeWithIsUserAllowedToRate(ratingService.IsUserAllowedToRate(rec, securityUtils.getCurrent_Id())));
+
+        return recipe.map(rec -> rec.buildRecipeWithIsUserAllowedToRate(ratingService.IsUserAllowedToRate(rec, securityUtils.getCurrent_Id())))
+                .map(Recipe::buildRecipeWithTranslatedCategory);
     }
 
     public Page<SummarizedRecipe> getRecipesByTrend(Pageable pageable, Trend trend) {

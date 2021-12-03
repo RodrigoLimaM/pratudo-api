@@ -19,12 +19,14 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 @Document(indexName = "recipes")
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Recipe {
 
     @Id
@@ -93,6 +95,18 @@ public class Recipe {
 
     @Field(name = "categories")
     private List<Category> categories;
+
+    private List<String> categoriesValues;
+
+    public Recipe buildRecipeWithTranslatedCategory() {
+        this.categoriesValues = categories.stream()
+                .map(Category::getDescription)
+                .collect(Collectors.toList());
+
+        this.categories = null;
+
+        return this;
+    }
 
     public static Double getRate(List<Rating> ratings) {
         return ratings.stream()

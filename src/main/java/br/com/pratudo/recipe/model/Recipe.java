@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 @Document(indexName = "recipes")
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Recipe {
 
     @Id

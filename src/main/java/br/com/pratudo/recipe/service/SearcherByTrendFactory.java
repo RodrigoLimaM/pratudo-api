@@ -20,7 +20,7 @@ public class SearcherByTrendFactory {
                                   RecipeMapper recipeMapper,
                                   RecipeTemplateRepository recipeTemplateRepository) {
         TREND_BY_SEARCHER_MAP.put(Trend.LATEST, new LatestCriteria(recipeRepository, recipeMapper));
-        TREND_BY_SEARCHER_MAP.put(Trend.MOST_PREPARATED, new MostPreparatedCriteria(recipeTemplateRepository, recipeMapper));
+        TREND_BY_SEARCHER_MAP.put(Trend.MOST_PREPARED, new MostPreparedCriteria(recipeTemplateRepository, recipeMapper));
     }
 
     public Searcher getUserIdByTypeInstance(Trend trend) {

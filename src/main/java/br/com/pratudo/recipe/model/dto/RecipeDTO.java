@@ -42,7 +42,7 @@ public class RecipeDTO {
 
     private List<Rating> ratings;
 
-    private Integer ratingsSize;
+    private Integer preparations;
 
     @Valid
     @NotEmpty

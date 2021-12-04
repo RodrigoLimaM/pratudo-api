@@ -49,11 +49,6 @@ public class Recipe {
     @Field(name = "serves")
     private Integer serves;
 
-    @JsonProperty
-    private Integer getPreparations() {
-        return ratings.size();
-    }
-
     @Field(type = FieldType.Date, name = "creationDate", format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime creationDate;
 
@@ -73,8 +68,8 @@ public class Recipe {
     @Field(name = "ratings")
     private List<Rating> ratings;
 
-    @Field(name = "ratingsSize")
-    private Integer ratingsSize;
+    @Field(name = "preparations")
+    private Integer preparations;
 
     private Boolean isUserAllowedToRate;
 

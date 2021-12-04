@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public enum Trend {
     LATEST("Recentes"),
-    MOST_PREPARATED("Mais preparados"),
+    MOST_PREPARED("Mais preparados"),
 //    MOST_COMMENTED("Mais comentados")
      ;
 

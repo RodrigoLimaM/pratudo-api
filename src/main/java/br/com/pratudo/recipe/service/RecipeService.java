@@ -83,7 +83,7 @@ public class RecipeService {
 
         recipeDTO.setRatings(Collections.emptyList());
 
-        recipeDTO.setRatingsSize(0);
+        recipeDTO.setPreparations(0);
 
         recipeDTO.setComments(Collections.emptyList());
 

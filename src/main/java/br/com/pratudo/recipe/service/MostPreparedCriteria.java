@@ -9,16 +9,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MostPreparatedCriteria implements Searcher {
+public class MostPreparedCriteria implements Searcher {
 
     private RecipeTemplateRepository recipeTemplateRepository;
 
     private RecipeMapper recipeMapper;
 
-    public static final String FIELD = "ratingsSize";
+    public static final String FIELD = "preparations";
 
     @Autowired
-    public MostPreparatedCriteria(RecipeTemplateRepository recipeTemplateRepository, RecipeMapper recipeMapper) {
+    public MostPreparedCriteria(RecipeTemplateRepository recipeTemplateRepository, RecipeMapper recipeMapper) {
         this.recipeTemplateRepository = recipeTemplateRepository;
         this.recipeMapper = recipeMapper;
     }

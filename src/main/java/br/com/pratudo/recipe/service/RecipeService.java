@@ -64,7 +64,7 @@ public class RecipeService {
     AnalyzerService analyzerService;
 
     @Autowired
-    SearcherByCriteriaFactory searcherByCriteriaFactory;
+    SearcherByTrendFactory searcherByTrendFactory;
 
     @Autowired
     RatingService ratingService;
@@ -83,6 +83,8 @@ public class RecipeService {
 
         recipeDTO.setRatings(Collections.emptyList());
 
+        recipeDTO.setPreparations(0);
+
         recipeDTO.setComments(Collections.emptyList());
 
         return recipeRepository.save(recipeMapper.convertRecipeDTOToRecipe(recipeDTO));
@@ -97,11 +99,13 @@ public class RecipeService {
 
     public Optional<Recipe> getRecipeById(String _id) {
         Optional<Recipe> recipe = recipeRepository.findById(_id);
-        return recipe.map(rec -> rec.buildRecipeWithIsUserAllowedToRate(ratingService.IsUserAllowedToRate(rec, securityUtils.getCurrent_Id())));
+
+        return recipe.map(rec -> rec.buildRecipeWithIsUserAllowedToRate(ratingService.IsUserAllowedToRate(rec, securityUtils.getCurrent_Id())))
+                .map(Recipe::buildRecipeWithTranslatedCategory);
     }
 
     public Page<SummarizedRecipe> getRecipesByTrend(Pageable pageable, Trend trend) {
-        return searcherByCriteriaFactory.getUserIdByTypeInstance(trend)
+        return searcherByTrendFactory.getUserIdByTypeInstance(trend)
                 .getRecipesByTrend(pageable);
     }
 

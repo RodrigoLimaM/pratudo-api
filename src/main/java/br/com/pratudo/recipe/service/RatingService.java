@@ -47,6 +47,7 @@ public class RatingService {
                         .rating(ratingDTO.getRate())
                 .build());
 
+        recipe.setPreparations(ratings.size());
 
         return recipeTemplateRepository.updateRecipe(recipe)
                 .getRatings();

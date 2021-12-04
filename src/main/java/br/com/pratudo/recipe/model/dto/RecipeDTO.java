@@ -42,6 +42,8 @@ public class RecipeDTO {
 
     private List<Rating> ratings;
 
+    private Integer preparations;
+
     @Valid
     @NotEmpty
     private List<Ingredient> ingredients;

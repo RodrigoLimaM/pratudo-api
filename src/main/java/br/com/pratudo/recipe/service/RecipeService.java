@@ -64,7 +64,7 @@ public class RecipeService {
     AnalyzerService analyzerService;
 
     @Autowired
-    SearcherByCriteriaFactory searcherByCriteriaFactory;
+    SearcherByTrendFactory searcherByTrendFactory;
 
     @Autowired
     RatingService ratingService;
@@ -82,6 +82,8 @@ public class RecipeService {
         recipeDTO.setCreationDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
 
         recipeDTO.setRatings(Collections.emptyList());
+
+        recipeDTO.setRatingsSize(0);
 
         recipeDTO.setComments(Collections.emptyList());
 
@@ -103,7 +105,7 @@ public class RecipeService {
     }
 
     public Page<SummarizedRecipe> getRecipesByTrend(Pageable pageable, Trend trend) {
-        return searcherByCriteriaFactory.getUserIdByTypeInstance(trend)
+        return searcherByTrendFactory.getUserIdByTypeInstance(trend)
                 .getRecipesByTrend(pageable);
     }
 

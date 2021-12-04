@@ -6,8 +6,10 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Trend {
-    LATEST("Recentes")
-    ;
+    LATEST("Recentes"),
+    MOST_PREPARATED("Mais preparados"),
+//    MOST_COMMENTED("Mais comentados")
+     ;
 
     private String description;
 

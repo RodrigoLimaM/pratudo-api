@@ -73,6 +73,9 @@ public class Recipe {
     @Field(name = "ratings")
     private List<Rating> ratings;
 
+    @Field(name = "ratingsSize")
+    private Integer ratingsSize;
+
     private Boolean isUserAllowedToRate;
 
     public Recipe buildRecipeWithIsUserAllowedToRate(boolean isUserAllowedToRate) {

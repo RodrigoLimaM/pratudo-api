@@ -5,6 +5,8 @@ import br.com.pratudo.recipe.model.enums.Category;
 import br.com.pratudo.recipe.model.enums.Difficulty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -17,6 +19,8 @@ import org.springframework.data.elasticsearch.core.document.Document;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.UpdateQuery;
 import org.springframework.stereotype.Repository;
 
@@ -76,6 +80,18 @@ public class RecipeTemplateRepository {
         documentOperations.update(updateQuery, IndexCoordinates.of("recipes"));
 
         return newRecipe;
+    }
+
+    public Page<Recipe> findAllByOrderByListFieldCountDesc(Pageable pageable, String field) {
+        NativeSearchQuery nativeSearchQuery = new NativeSearchQueryBuilder().
+                withSort(SortBuilders.fieldSort(field).order(SortOrder.DESC))
+                .build();
+
+        nativeSearchQuery.setPageable(pageable);
+
+        SearchHits<Recipe> searchHits = elasticsearchRestTemplate.search(nativeSearchQuery, Recipe.class);
+
+        return new PageImpl<>(searchHits.getSearchHits().stream().map(SearchHit::getContent).collect(Collectors.toList()));
     }
 
 }

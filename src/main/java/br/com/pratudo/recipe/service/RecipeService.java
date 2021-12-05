@@ -206,7 +206,7 @@ public class RecipeService {
     }
 
     public GamificationData handleCreateRecipeGamification() {
-        return gamificationHandlerByCriteriaFactory.getUserIdByTypeInstance(GamificationContext.CREATE_RECIPE)
+        return gamificationHandlerByCriteriaFactory.getGamificationHandlerByGamificationContextInstance(GamificationContext.CREATE_RECIPE)
                 .handleGamification();
     }
 }

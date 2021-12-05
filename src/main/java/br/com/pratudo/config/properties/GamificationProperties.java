@@ -14,8 +14,10 @@ public class GamificationProperties {
 
     private GamificationData createRecipe;
 
-    private GamificationData createRating;
+    private GamificationData createRate;
 
     private GamificationData createComment;
+
+    private GamificationData createRateAndComment;
 
 }

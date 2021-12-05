@@ -7,21 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-class CreateRatingGamificationHandler implements GamificationHandler {
+class CreateRateGamificationHandler implements GamificationHandler {
 
     private GamificationProperties gamificationProperties;
 
     private UserService userService;
 
     @Autowired
-    public CreateRatingGamificationHandler(GamificationProperties gamificationProperties, UserService userService) {
+    public CreateRateGamificationHandler(GamificationProperties gamificationProperties, UserService userService) {
         this.gamificationProperties = gamificationProperties;
         this.userService = userService;
     }
 
     @Override
     public GamificationData handleGamification() {
-        GamificationData gamificationData = gamificationProperties.getCreateRating();
+        GamificationData gamificationData = gamificationProperties.getCreateRate();
 
         userService.addExperience(gamificationData.getGainedExperience());
 

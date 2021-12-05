@@ -30,9 +30,12 @@ gamification:
   createRecipe:
     gainedExperience: 500
     reason: Criar receita
-  createRating:
-    gainedExperience: 250
+  createRate:
+    gainedExperience: 25
     reason: Avaliar receita
   createComment:
     gainedExperience: 250
     reason: Comentar receita
+  createRateAndComment:
+    gainedExperience: 500
+    reason: Preparar receita

@@ -65,7 +65,7 @@ public class RecipeTemplateRepository {
 
         SearchHits<Recipe> searchHits = elasticsearchRestTemplate.search(criteriaQuery, Recipe.class);
 
-        return new PageImpl<>(extractRecipes(searchHits));
+        return new PageImpl<>(extractRecipesFromSearchHits(searchHits));
     }
 
     @SneakyThrows
@@ -93,7 +93,7 @@ public class RecipeTemplateRepository {
 
         SearchHits<Recipe> searchHits = elasticsearchRestTemplate.search(nativeSearchQuery, Recipe.class);
 
-        return new PageImpl<>(extractRecipes(searchHits));
+        return new PageImpl<>(extractRecipesFromSearchHits(searchHits));
     }
 
     public Page<Recipe> findAllByOrderByListFieldAverageCountDesc(Pageable pageable, String field) {
@@ -107,10 +107,10 @@ public class RecipeTemplateRepository {
 
         SearchHits<Recipe> searchHits = elasticsearchRestTemplate.search(nativeSearchQuery, Recipe.class);
 
-        return new PageImpl<>(extractRecipes(searchHits));
+        return new PageImpl<>(extractRecipesFromSearchHits(searchHits));
     }
 
-    private List<Recipe> extractRecipes(SearchHits<Recipe> searchHits) {
+    private List<Recipe> extractRecipesFromSearchHits(SearchHits<Recipe> searchHits) {
         return searchHits.getSearchHits()
                 .stream()
                 .map(SearchHit::getContent)

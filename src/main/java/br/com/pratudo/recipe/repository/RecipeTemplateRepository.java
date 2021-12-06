@@ -6,6 +6,7 @@ import br.com.pratudo.recipe.model.enums.Difficulty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortMode;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -64,7 +65,7 @@ public class RecipeTemplateRepository {
 
         SearchHits<Recipe> searchHits = elasticsearchRestTemplate.search(criteriaQuery, Recipe.class);
 
-        return new PageImpl<>(searchHits.getSearchHits().stream().map(SearchHit::getContent).collect(Collectors.toList()));
+        return new PageImpl<>(extractRecipesFromSearchHits(searchHits));
     }
 
     @SneakyThrows
@@ -84,14 +85,35 @@ public class RecipeTemplateRepository {
 
     public Page<Recipe> findAllByOrderByListFieldCountDesc(Pageable pageable, String field) {
         NativeSearchQuery nativeSearchQuery = new NativeSearchQueryBuilder().
-                withSort(SortBuilders.fieldSort(field).order(SortOrder.DESC))
+                withSort(SortBuilders.fieldSort(field)
+                        .order(SortOrder.DESC))
                 .build();
 
         nativeSearchQuery.setPageable(pageable);
 
         SearchHits<Recipe> searchHits = elasticsearchRestTemplate.search(nativeSearchQuery, Recipe.class);
 
-        return new PageImpl<>(searchHits.getSearchHits().stream().map(SearchHit::getContent).collect(Collectors.toList()));
+        return new PageImpl<>(extractRecipesFromSearchHits(searchHits));
     }
 
+    public Page<Recipe> findAllByOrderByListFieldAverageCountDesc(Pageable pageable, String field) {
+        NativeSearchQuery nativeSearchQuery = new NativeSearchQueryBuilder().
+                withSort(SortBuilders.fieldSort(field)
+                        .sortMode(SortMode.AVG)
+                        .order(SortOrder.DESC))
+                .build();
+
+        nativeSearchQuery.setPageable(pageable);
+
+        SearchHits<Recipe> searchHits = elasticsearchRestTemplate.search(nativeSearchQuery, Recipe.class);
+
+        return new PageImpl<>(extractRecipesFromSearchHits(searchHits));
+    }
+
+    private List<Recipe> extractRecipesFromSearchHits(SearchHits<Recipe> searchHits) {
+        return searchHits.getSearchHits()
+                .stream()
+                .map(SearchHit::getContent)
+                .collect(Collectors.toList());
+    }
 }

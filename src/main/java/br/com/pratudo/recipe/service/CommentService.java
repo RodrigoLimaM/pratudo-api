@@ -87,7 +87,7 @@ public class CommentService {
     }
 
     public GamificationData handleCreateCommentGamification() {
-        return gamificationHandlerByCriteriaFactory.getUserIdByTypeInstance(GamificationContext.CREATE_COMMENT)
+        return gamificationHandlerByCriteriaFactory.getGamificationHandlerByGamificationContextInstance(GamificationContext.CREATE_COMMENT)
                 .handleGamification();
     }
 

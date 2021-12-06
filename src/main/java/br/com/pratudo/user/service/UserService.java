@@ -53,8 +53,6 @@ public class UserService {
         userDTO.setPerformance(buildInitialPerformance());
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
 
-        System.out.println(userMapper.convertUserDTOToUser(userDTO));
-
         return userRepository.save(userMapper.convertUserDTOToUser(userDTO));
     }
 

@@ -18,10 +18,11 @@ public class GamificationHandlerByCriteriaFactory {
                                                 UserService userService) {
         CRITERIA_BY_GAMIFICATION_HANDLER_MAP.put(GamificationContext.CREATE_RECIPE, new CreateRecipeGamificationHandler(gamificationProperties, userService));
         CRITERIA_BY_GAMIFICATION_HANDLER_MAP.put(GamificationContext.CREATE_COMMENT, new CreateCommentGamificationHandler(gamificationProperties, userService));
-        CRITERIA_BY_GAMIFICATION_HANDLER_MAP.put(GamificationContext.CREATE_RATING, new CreateRatingGamificationHandler(gamificationProperties, userService));
+        CRITERIA_BY_GAMIFICATION_HANDLER_MAP.put(GamificationContext.CREATE_RATE, new CreateRateGamificationHandler(gamificationProperties, userService));
+        CRITERIA_BY_GAMIFICATION_HANDLER_MAP.put(GamificationContext.CREATE_RATE_AND_COMMENT, new CreateRateAndCommentGamificationHandler(gamificationProperties, userService));
     }
 
-    public GamificationHandler getUserIdByTypeInstance(GamificationContext gamificationContext) {
+    public GamificationHandler getGamificationHandlerByGamificationContextInstance(GamificationContext gamificationContext) {
         return CRITERIA_BY_GAMIFICATION_HANDLER_MAP.get(gamificationContext);
     }
 

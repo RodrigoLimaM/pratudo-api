@@ -11,19 +11,25 @@ spring:
   elasticsearch:
     rest:
       uris: ${BONSAI_URL}
+  redis:
+    host: redis-16007.c232.us-east-1-2.ec2.cloud.redislabs.com
+    password: ${REDIS_PASSWORD}
+    port: 16007
+  cache:
+    type: redis
 
-logging:
-  level:
-    tracer: TRACE
-    org:
-      zalando:
-      logbook: TRACE
-  charset:
-      console: windows-1252
-
-logbook:
-  format:
-    style: http
+#logging:
+#  level:
+#    tracer: TRACE
+#    org:
+#      zalando:
+#      logbook: TRACE
+#  charset:
+#      console: windows-1252
+#
+#logbook:
+#  format:
+#    style: http
 
 gamification:
   experienceToLevelUp: 1000

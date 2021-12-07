@@ -25,6 +25,8 @@ import br.com.pratudo.commons.utils.StringUtils;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -76,6 +78,7 @@ public class RecipeService {
 
     private static final Integer FORMATTED_INGREDIENTS_ITEMS_SIZE = 10;
 
+    @CacheEvict(cacheNames = "RacipesByTrend", allEntries = true)
     public Recipe createRecipe(final RecipeDTO recipeDTO) {
         recipeDTO.setOwner(buildInitialOwner());
 
@@ -104,7 +107,9 @@ public class RecipeService {
                 .map(Recipe::buildRecipeWithTranslatedCategory);
     }
 
+    @Cacheable(cacheNames = "RacipesByTrend", key = "{#pageable, #trend}")
     public Page<SummarizedRecipe> getRecipesByTrend(Pageable pageable, Trend trend) {
+        System.out.println("**************************\n" +"BATEU");
         return searcherByTrendFactory.getUserIdByTypeInstance(trend)
                 .getRecipesByTrend(pageable);
     }

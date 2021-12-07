@@ -9,13 +9,14 @@ import org.springframework.data.elasticsearch.annotations.Field;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class Time {
+public class Time implements Serializable {
 
     @NotNull
     @JsonProperty("unit")

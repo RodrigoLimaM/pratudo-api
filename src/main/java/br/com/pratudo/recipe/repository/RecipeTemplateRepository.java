@@ -51,7 +51,7 @@ public class RecipeTemplateRepository {
             criteria = criteria.and("difficulty").in(difficulties);
 
         if (!Objects.isNull(serves))
-            criteria = criteria.and("serves").is(serves);
+            criteria = criteria.and("serves").greaterThan(serves);
 
         if (!Objects.isNull(name))
             criteria = criteria.and("name").is(name);

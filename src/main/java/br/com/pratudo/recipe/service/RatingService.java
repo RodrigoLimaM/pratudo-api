@@ -14,6 +14,7 @@ import br.com.pratudo.recipe.model.dto.RatingDTO;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.recipe.repository.RecipeTemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -37,6 +38,7 @@ public class RatingService {
     @Autowired
     GamificationHandlerByCriteriaFactory gamificationHandlerByCriteriaFactory;
 
+    @CacheEvict(cacheNames = "RacipesByTrend", allEntries = true)
     public List<Rating> createRate(String recipeId, RatingDTO ratingDTO) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(ResourceNotFoundException::new);
@@ -76,6 +78,7 @@ public class RatingService {
                 .handleGamification();
     }
 
+    @CacheEvict(cacheNames = "RacipesByTrend", allEntries = true)
     public void createRateAndComment(String recipeId, RatingAndCommentDTO ratingAndCommentDTO) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(ResourceNotFoundException::new);

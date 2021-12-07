@@ -12,6 +12,7 @@ import br.com.pratudo.recipe.model.dto.ContentDTO;
 import br.com.pratudo.recipe.repository.RecipeRepository;
 import br.com.pratudo.recipe.repository.RecipeTemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,6 +35,7 @@ public class CommentService {
     @Autowired
     GamificationHandlerByCriteriaFactory gamificationHandlerByCriteriaFactory;
 
+    @CacheEvict(cacheNames = "RacipesByTrend", allEntries = true)
     public List<Comment> createComment(String recipeId, final ContentDTO contentDTO, String newCommentId) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(ResourceNotFoundException::new);
@@ -56,6 +58,7 @@ public class CommentService {
                 .build();
     }
 
+    @CacheEvict(cacheNames = "RacipesByTrend", allEntries = true)
     public Comment createReply(String recipeId, String commentId, ContentDTO contentDTO, String newReplyId) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(ResourceNotFoundException::new);
